@@ -179,7 +179,7 @@ const Footer = () => {
           {/* App Store Buttons */}
           <div className="flex flex-row items-center justify-center gap-3 md:mb-0 mb-10">
             <a
-              href="https://apps.apple.com/us/app/b%C3%A1ch-ho%C3%A1-houston/id6745395289"
+              href="www.apple.com/app/oorukdai"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-transform transform hover:scale-105 flex flex-col items-start max-w-[150px] bg-white px-3 py-1 rounded-md"
@@ -202,7 +202,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://play.google.com/store/apps/details?id=com.bachhoahouston"
+              href="https://play.google.com/store/apps/details?id=com.oorukdai.app"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-transform transform hover:scale-105 bg-white px-3 py-1 rounded-md max-w-[150px] flex flex-wrap items-start"
