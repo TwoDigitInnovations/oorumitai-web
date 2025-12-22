@@ -72,8 +72,8 @@ const LeftLayout = (props) => {
 
               
                 <div className="flex items-center gap-3 pl-6">
-                    <span className="text-md text-gray-600"> {t("Select Language")}:</span>
-                    <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
+                    {/* <span className="text-md text-gray-600"> {t("Select Language")}:</span> */}
+                    {/* <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
                         <button
                             onClick={() => handleClick("en")}
                             className={`px-3 py-2 cursor-pointer text-[14px] font-semibold transition ${lang === "en"
@@ -92,7 +92,7 @@ const LeftLayout = (props) => {
                         >
                             VI
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

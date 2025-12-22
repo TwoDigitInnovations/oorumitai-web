@@ -280,7 +280,7 @@ const SellProduct = ({ loader, toaster }) => {
                   ) : (
                     <div className="mx-auto">
                       <button
-                        className="w-[150px] py-2 bg-[#F9C60A] text-white md:w-[200px] font-semibold rounded-full flex justify-center items-center gap-2 hover:bg-green-700 transition"
+                        className="w-[150px] py-2 bg-[#F9C60A] text-gray-800 md:w-[200px] font-semibold rounded-full flex justify-center items-center gap-2 hover:bg-[#F9C60A] transition"
                         onClick={() => handleAddToCart(item)}
                       >
                         <FiShoppingCart className="w-5 h-5" />
