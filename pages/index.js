@@ -43,12 +43,12 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>Shop Everyday Essentials at Bachhoahouston Today</title>
+        <title>Shop Everyday Essentials at Oorukdai Today</title>
         <meta
           name="description"
-          content="Bachhoahouston offers top-quality groceries, beauty & more with fast home delivery, curbside pickup & shipping. Shop daily essentials now!"
+          content="Oorukdai offers top-quality groceries, beauty & more with fast home delivery, curbside pickup & shipping. Shop daily essentials now!"
         />
-        <link rel="canonical" href="https://www.bachhoahouston.com/" />
+        <link rel="canonical" href="https://www.oorukdai.com/" />
       </Head>
       <div className="mx-auto md:max-w-7xl mt-7">
 
