@@ -62,7 +62,7 @@ function AnnouncementBar({ announcementBar, setAnnouncementBar, loader, toaster 
         className={`transition-all duration-500 ease-in-out ${announcementBar ? "opacity-100 max-h-12" : "opacity-0 max-h-0 overflow-hidden"
           }`}
       >
-        <div className="relative w-full h-12 overflow-hidden flex justify-center items-center bg-[#F9C60A] text-white">
+        <div className="relative w-full h-12 overflow-hidden flex justify-center items-center bg-[#F9C60A] text-black">
           <div
             className="absolute whitespace-nowrap animate-marquee-mobile left-8 md:left-[30%]"
           >

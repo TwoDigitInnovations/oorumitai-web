@@ -78,7 +78,7 @@ const Footer = () => {
                     href="mailto:contact@bachhoahouston.com"
                     className="text-[16px] md:text-[19px]"
                   >
-                    contact@oorukadai.com
+                    contact@Oorumittai.com
                   </a>
                 </li>
               </ul>
@@ -171,7 +171,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-center md:text-left text-sm md:text-base text-gray-700">
             <p>
-              © {new Date().getFullYear()} <span className="font-semibold text-black">Oorukadai</span>.{" "}
+              © {new Date().getFullYear()} <span className="font-semibold text-black">Oorumittai</span>.{" "}
               {t("All rights reserved")}
             </p>
           </div>

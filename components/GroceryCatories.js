@@ -184,7 +184,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
         ) : itemQuantity > 0 ? (
           <div className="bg-gray-100 rounded-full flex items-center px-2 py-1">
             <div
-              className="bg-[#F9C60A]  cursor-pointer rounded-full w-7 h-7 flex justify-center items-center transition-colors"
+              className="bg-[#F9C60A] cursor-pointer rounded-full w-7 h-7 flex justify-center items-center hover:bg-opacity-90 transition-colors"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -209,7 +209,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
                 );
               }}
             >
-              <IoRemoveSharp className="text-white w-5 h-5" />
+              <IoRemoveSharp className="text-black w-5 h-5" />
             </div>
 
             <p className="text-black text-lg font-semibold md:mx-4 mx-2 min-w-[10px] text-center">
@@ -217,7 +217,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
             </p>
 
             <div
-              className="bg-[#F9C60A] cursor-pointer rounded-full w-7 h-7 flex justify-center items-center transition-colors"
+              className="bg-[#F9C60A] cursor-pointer rounded-full w-7 h-7 flex justify-center items-center hover:bg-opacity-90 transition-colors"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -245,16 +245,16 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
                 );
               }}
             >
-              <IoAddSharp className="text-white w-5 h-5" />
+              <IoAddSharp className="text-black w-5 h-5" />
             </div>
           </div>
         ) : (
           <button
-            className="bg-[#F9C60A] text-white font-semibold px-4 py-2 rounded-full text-sm cursor-pointer flex items-center gap-2 transition-colors"
+            className="bg-[#F9C60A] text-black font-semibold px-4 py-2 rounded-full text-sm cursor-pointer flex items-center gap-2 hover:bg-opacity-90 transition-colors"
             onClick={handleAddToCart}
           >
             {t("Add")}
-            <FiShoppingCart className="w-5 h-5" />
+            <FiShoppingCart className="w-5 h-5 text-black" />
           </button>
         )}
       </div>

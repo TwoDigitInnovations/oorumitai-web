@@ -149,7 +149,7 @@ export default function AddressForm({
           {/* Submit Button */}
           <button
             onClick={onSubmit}
-            className="bg-custom-green mt-5 w-full text-white py-2 rounded-lg text-sm font-medium transition-all"
+            className="bg-custom-green mt-5 w-full text-black py-2 rounded-lg text-sm font-medium transition-all"
           >
             {t("Update Profile")}
           </button>

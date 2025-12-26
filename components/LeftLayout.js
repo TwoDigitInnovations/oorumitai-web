@@ -72,27 +72,49 @@ const LeftLayout = (props) => {
 
               
                 <div className="flex items-center gap-3 pl-6">
-                    {/* <span className="text-md text-gray-600"> {t("Select Language")}:</span> */}
-                    {/* <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
+                    {/* Track Order Link */}
+                    {/* <div
+                        className="cursor-pointer flex items-center gap-2 hover:text-custom-green transition-colors"
+                        onClick={() => router.push("/track-order")}
+                    >
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className="h-5 w-5 text-black" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" 
+                            />
+                        </svg>
+                        <span className="text-black font-medium">{t("Track Order")}</span>
+                    </div> */}
+
+                    <span className="text-md text-gray-600"> {t("Select Language")}:</span>
+                    <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
                         <button
                             onClick={() => handleClick("en")}
-                            className={`px-3 py-2 cursor-pointer text-[14px] font-semibold transition ${lang === "en"
-                                    ? "bg-[#F9C60A] text-white rounded-full"
-                                    : "text-gray-700"
+                            className={`px-3 py-2 cursor-pointer text-[14px] transition ${lang === "en"
+                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
+                                    : "text-black font-semibold"
                                 }`}
                         >
                             EN
                         </button>
                         <button
-                            onClick={() => handleClick("vi")}
-                            className={`px-3 py-2 text-[14px] cursor-pointer font-semibold transition ${lang === "vi"
-                                    ? "bg-[#F9C60A] text-white rounded-full"
-                                    : "text-gray-700 "
+                            onClick={() => handleClick("fr")}
+                            className={`px-3 py-2 text-[14px] cursor-pointer transition ${lang === "fr"
+                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
+                                    : "text-black font-semibold"
                                 }`}
                         >
-                            VI
+                            FR
                         </button>
-                    </div> */}
+                    </div>
                 </div>
 
             </div>

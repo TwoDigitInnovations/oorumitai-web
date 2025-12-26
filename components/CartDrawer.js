@@ -145,19 +145,18 @@ export default function CartDrawer({
                                         <div className="md:flex hidden flex-col items-end md:flex-row md:items-center gap-3 mt-2 md:mt-0">
                                             <div className="flex items-center bg-custom-green rounded-full px-3 py-1">
                                                 <button onClick={() => decreaseQty(i, item)}>
-                                                    <IoRemoveSharp className="text-white text-xl" />
+                                                    <IoRemoveSharp className="text-black text-xl" />
                                                 </button>
-                                                <span className="mx-4 text-white font-medium text-base">{item?.qty}</span>
+                                                <span className="mx-4 text-black font-medium text-base">{item?.qty}</span>
 
                                                 <button onClick={() => increaseQty(i, item)}>
-                                                    <IoAddSharp className="text-white text-xl" />
+                                                    <IoAddSharp className="text-black text-xl" />
                                                 </button>
                                             </div>
 
                                             <div className="flex items-center gap-3">
                                                 <p className="text-black font-semibold text-base">
-                                                    {constant.currency}
-                                                    {item?.total}
+                                                    {constant.currency} {item?.total}
                                                 </p>
                                                 <IoMdClose
                                                     className="w-5 h-5 text-black cursor-pointer"
@@ -169,19 +168,18 @@ export default function CartDrawer({
                                     <div className="md:hidden flex flex-row items-center justify-center gap-3 mt-2 md:mt-0">
                                         <div className="flex items-center bg-custom-green rounded-full px-3 py-1">
                                             <button onClick={() => decreaseQty(i, item)}>
-                                                <IoRemoveSharp />
+                                                <IoRemoveSharp className="text-black text-xl" />
                                             </button>
-                                            <span className="mx-4 text-white font-medium text-base">{item?.qty}</span>
+                                            <span className="mx-4 text-black font-medium text-base">{item?.qty}</span>
 
                                             <button onClick={() => increaseQty(i, item)}>
-                                                <IoAddSharp />
+                                                <IoAddSharp className="text-black text-xl" />
                                             </button>
                                         </div>
 
                                         <div className="flex items-center gap-3">
                                             <p className="text-black font-semibold text-base">
-                                                {constant.currency}
-                                                {item?.total}
+                                                {constant.currency} {item?.total}
                                             </p>
                                             <IoMdClose
                                                 className="w-5 h-5 text-black cursor-pointer"

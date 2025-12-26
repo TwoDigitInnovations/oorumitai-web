@@ -161,7 +161,7 @@ const FeedbackForm = (props) => {
                     href="mailto:contact@bachhoahouston.com"
                     className="text-black text-lg font-poppins hover:text-blue-600 transition"
                   >
-                    contact@Oorukadai.com
+                    contact@Oorumittai.com
                   </a>
                 </div>
 

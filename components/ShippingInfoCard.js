@@ -20,7 +20,7 @@ export default function ShippingInfoCard({
       {!hasAddress ? (
         <button
           onClick={() => setOpen(true)}
-          className="flex items-center cursor-pointer gap-2 text-white bg-orange-500 px-4 py-2 rounded-lg hover:bg-orange-600"
+          className="flex items-center cursor-pointer gap-2 text-black bg-[#F9C60A] px-4 py-2 rounded-lg hover:bg-opacity-90"
         >
           <Plus size={18} /> Add Address
         </button>

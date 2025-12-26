@@ -43,6 +43,18 @@ function Cart(props) {
   const [orderId, setOrderID] = useState("");
   const [successPopup, setSuccessPopup] = useState(false);
   const [shipcCost, setShipCost] = useState({})
+  
+  // Guest user state
+  const [isGuest, setIsGuest] = useState(false);
+  const [guestInfo, setGuestInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  });
 
   const handleApplyCoupon = () => {
     if (!user?._id) {
@@ -437,8 +449,11 @@ function Cart(props) {
   };
 
   const createProductRquest = async (e) => {
+    // For guest users, validate address if delivery is selected
+    const needsAddress = pickupOption === "localDelivery" || pickupOption === "ShipmentDelivery";
+    
     if (pickupOption === "localDelivery") {
-      if (!localAddress.dateOfDelivery) {
+      if (!isGuest && !localAddress.dateOfDelivery) {
         return props.toaster({
           type: "error",
           message: "Please Enter Delivery Date",
@@ -447,7 +462,7 @@ function Cart(props) {
     }
 
     if (pickupOption === "localDelivery") {
-      if (!localAddress.zipcode) {
+      if (!isGuest && !localAddress.zipcode) {
         return props.toaster({
           type: "error",
           message:
@@ -456,12 +471,9 @@ function Cart(props) {
       }
     }
 
-    if (
-      pickupOption === "localDelivery" ||
-      pickupOption === "ShipmentDelivery"
-    ) {
+    // Address validation for delivery options
+    if (needsAddress && !isGuest) {
       const { email, name, phoneNumber, lastname, address } = localAddress;
-
       if (
         !email?.trim() ||
         !name?.trim() ||
@@ -476,7 +488,7 @@ function Cart(props) {
       }
     }
 
-    if (pickupOption === "driveUp" || pickupOption === "orderPickup") {
+    if ((pickupOption === "driveUp" || pickupOption === "orderPickup") && !isGuest) {
       if (!date) {
         return props.toaster({
           type: "error",
@@ -595,8 +607,6 @@ function Cart(props) {
       subtotal: CartTotal,
       discount: discount,
       discountCode: discountCode,
-      user: user._id,
-      Email: user.email,
       isOrderPickup,
       isOnce,
       isDriveUp,
@@ -606,6 +616,37 @@ function Cart(props) {
       Deliverytip: deliveryTip.toString(),
       order_platform: 'web'
     };
+
+    // Add user or guest info
+    if (isLoggedIn) {
+      newData.user = user._id;
+      newData.Email = user.email;
+    } else if (isGuest) {
+      newData.isGuestOrder = true;
+      newData.guestName = guestInfo.name;
+      newData.guestEmail = guestInfo.email;
+      newData.guestPhone = guestInfo.phone;
+      newData.Email = guestInfo.email;
+      
+      // Always add guest delivery address
+      newData.Local_address = {
+        name: guestInfo.name,
+        email: guestInfo.email,
+        phoneNumber: guestInfo.phone,
+        address: guestInfo.address,
+        city: guestInfo.city,
+        state: guestInfo.state,
+        zipcode: guestInfo.zipcode,
+        lastname: "",
+        ApartmentNo: "",
+        SecurityGateCode: "",
+        BusinessAddress: "",
+        location: {
+          type: "Point",
+          coordinates: [0, 0]
+        }
+      };
+    }
 
     localStorage.setItem("checkoutData", JSON.stringify(newData));
     props.loader && props.loader(true);
@@ -852,18 +893,18 @@ function Cart(props) {
                         subtitle: t("Pick it up inside the store"),
                         type: "pickup",
                       },
-                      {
-                        id: "driveUp",
-                        title: t("Curbside Pickup"),
-                        subtitle: t("We bring it out to your car"),
-                        type: "pickup",
-                      },
-                      {
-                        id: "localDelivery",
-                        title: t("Next Day Local Delivery"),
-                        subtitle: t("Cut off time 8 pm"),
-                        type: "delivery",
-                      },
+                      // {
+                      //   id: "driveUp",
+                      //   title: t("Curbside Pickup"),
+                      //   subtitle: t("We bring it out to your car"),
+                      //   type: "pickup",
+                      // },
+                      // {
+                      //   id: "localDelivery",
+                      //   title: t("Next Day Local Delivery"),
+                      //   subtitle: t("Cut off time 8 pm"),
+                      //   type: "delivery",
+                      // },
                       {
                         id: "ShipmentDelivery",
                         title: t("Shipping"),
@@ -954,7 +995,7 @@ function Cart(props) {
 
                                 <p className="text-[12px] text-gray-700 text-start max-w-[430px]">
                                   {t(
-                                    "*Note: Oorukadai will hold your order until close of the next business day if your order isn’t picked up within your scheduled pick up date, after that your order will be cancelled and refunded less 5% restocking fee"
+                                    "*Note: Oorumittai will hold your order until close of the next business day if your order isn’t picked up within your scheduled pick up date, after that your order will be cancelled and refunded less 5% restocking fee"
                                   )}
                                 </p>
                                 <p className="text-[12px] text-gray-700 text-start max-w-[430px]">
@@ -1083,7 +1124,7 @@ function Cart(props) {
                       )}
                     </div>
                     <button
-                      className="bg-custom-green text-white md:px-8 px-4 py-2.5 cursor-pointer text-sm rounded-md"
+                      className="bg-custom-green text-black md:px-8 px-4 py-2.5 cursor-pointer text-sm rounded-md"
                       onClick={handleApplyCoupon}
                     >
                       {t("Apply")}
@@ -1155,10 +1196,10 @@ function Cart(props) {
                           <option value="" className="text-black">
                             {t("Select a tip")}
                           </option>
-                          <option value="0">$0</option>
-                          <option value="2">$2</option>
-                          <option value="5">$5</option>
-                          <option value="8">$8</option>
+                          <option value="0">INR 0</option>
+                          <option value="2">INR 2</option>
+                          <option value="5">INR 5</option>
+                          <option value="8">INR 8</option>
                         </select>
                       </div>
                     )}
@@ -1171,14 +1212,14 @@ function Cart(props) {
                         {/* Pickup Free */}
                         {pickupOption === "orderPickup" ||
                           pickupOption === "driveUp" ? (
-                          <span className="text-base">{t("$0.00")}</span>
+                          <span className="text-base">{t("INR 0.00")}</span>
                         ) : pickupOption === "localDelivery" ? (
                           CartTotal < shipcCost?.minShippingCostforLocal ? (
                             <span className="text-base font-medium">
                               {constant.currency} {currentLocalCost}
                             </span>
                           ) : (
-                            <span className="text-base">{t("$0.00")}</span>
+                            <span className="text-base">{t("INR 0.00")}</span>
                           )
                         ) : pickupOption === "ShipmentDelivery" ? (
                           CartTotal < shipcCost?.minShipmentCostForShipment ? (
@@ -1186,7 +1227,7 @@ function Cart(props) {
                               {constant.currency} {currentShipmentCost}
                             </span>
                           ) : (
-                            <span className="text-base">{t("$0.00")}</span>
+                            <span className="text-base">{t("INR 0.00")}</span>
                           )
                         ) : null}
                       </div>
@@ -1208,7 +1249,7 @@ function Cart(props) {
                           className="w-full cursor-pointer bg-custom-green text-white py-3 rounded-lg font-semibold"
                           onClick={() => {
                             if (cartData?.length === 0) {
-                              toaster?.({
+                              props.toaster?.({
                                 type: "warning",
                                 message: "Your cart is empty",
                               });
@@ -1220,14 +1261,132 @@ function Cart(props) {
                           {t("Proceed To Checkout")}
                         </button>
                       ) : (
-                        <button
-                          className="w-full cursor-pointer bg-custom-green text-white py-3 rounded-lg font-semibold"
-                          onClick={() => {
-                            router.push("/signIn");
-                          }}
-                        >
-                          {t("Login to Checkout")}
-                        </button>
+                        <>
+                          {!isGuest ? (
+                            <div className="space-y-3">
+                              <button
+                                className="w-full cursor-pointer bg-custom-green text-black py-3 rounded-lg font-semibold"
+                                onClick={() => {
+                                  router.push("/signIn");
+                                }}
+                              >
+                                {t("Login to Checkout")}
+                              </button>
+                              <button
+                                className="w-full cursor-pointer bg-white text-custom-green border-2 border-custom-green py-3 rounded-lg font-semibold"
+                                onClick={() => setIsGuest(true)}
+                              >
+                                {t("Continue as Guest")}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="space-y-3">
+                              <div className="bg-white border border-gray-200 p-4 rounded-lg space-y-3">
+                                <h3 className="font-semibold text-lg mb-3 text-gray-800">{t("Guest Checkout")}</h3>
+                                <p className="text-sm text-gray-600 mb-3">{t("Complete your order without creating an account")}</p>
+                                
+                                {/* Contact Information */}
+                                <div className="space-y-3">
+                                  <h4 className="font-medium text-gray-700 text-sm">{t("Contact Information")}</h4>
+                                  <input
+                                    type="text"
+                                    placeholder={t("Full Name")}
+                                    value={guestInfo.name}
+                                    onChange={(e) => setGuestInfo({...guestInfo, name: e.target.value})}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                    required
+                                  />
+                                  <input
+                                    type="email"
+                                    placeholder={t("Email")}
+                                    value={guestInfo.email}
+                                    onChange={(e) => setGuestInfo({...guestInfo, email: e.target.value})}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                    required
+                                  />
+                                  <input
+                                    type="tel"
+                                    placeholder={t("Phone Number")}
+                                    value={guestInfo.phone}
+                                    onChange={(e) => setGuestInfo({...guestInfo, phone: e.target.value})}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                    required
+                                  />
+                                </div>
+
+                                {/* Delivery Address */}
+                                <div className="space-y-3 border-t pt-3 mt-3">
+                                  <h4 className="font-medium text-gray-700 text-sm">{t("Delivery Address")}</h4>
+                                  <textarea
+                                    placeholder={t("Street Address")}
+                                    value={guestInfo.address}
+                                    onChange={(e) => setGuestInfo({...guestInfo, address: e.target.value})}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                    rows="2"
+                                    required
+                                  />
+                                  <div className="grid grid-cols-2 gap-3">
+                                    <input
+                                      type="text"
+                                      placeholder={t("City")}
+                                      value={guestInfo.city}
+                                      onChange={(e) => setGuestInfo({...guestInfo, city: e.target.value})}
+                                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                      required
+                                    />
+                                    <input
+                                      type="text"
+                                      placeholder={t("State")}
+                                      value={guestInfo.state}
+                                      onChange={(e) => setGuestInfo({...guestInfo, state: e.target.value})}
+                                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                      required
+                                    />
+                                  </div>
+                                  <input
+                                    type="text"
+                                    placeholder={t("ZIP Code")}
+                                    value={guestInfo.zipcode}
+                                    onChange={(e) => setGuestInfo({...guestInfo, zipcode: e.target.value})}
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-green bg-white text-gray-800"
+                                    required
+                                  />
+                                </div>
+                              </div>
+                              <button
+                                className="w-full cursor-pointer bg-custom-green text-black py-3 rounded-lg font-semibold hover:bg-opacity-90"
+                                onClick={() => {
+                                  // Validate all fields
+                                  if (!guestInfo.name || !guestInfo.email || !guestInfo.phone) {
+                                    props.toaster?.({
+                                      type: "error",
+                                      message: "Please fill contact information",
+                                    });
+                                    return;
+                                  }
+                                  
+                                  if (!guestInfo.address || !guestInfo.city || !guestInfo.state || !guestInfo.zipcode) {
+                                    props.toaster?.({
+                                      type: "error",
+                                      message: "Please fill delivery address",
+                                    });
+                                    return;
+                                  }
+                                  
+                                  createProductRquest && createProductRquest();
+                                }}
+                              >
+                                {t("Place Order")}
+                              </button>
+                              <button
+                                className="w-full cursor-pointer bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300"
+                                onClick={() => setIsGuest(false)}
+                              >
+                                {t("Back")}
+                              </button>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -1335,15 +1494,30 @@ function Cart(props) {
                   Home
                 </button>
 
-                <button
-                  onClick={() => {
-                    setSuccessPopup(false);
-                    router.push("/Mybooking");
-                  }}
-                  className="w-1/2 bg-custom-green text-white py-2 rounded-lg font-medium shadow cursor-pointer"
-                >
-                  My Orders
-                </button>
+                {isLoggedIn && (
+                  <button
+                    onClick={() => {
+                      setSuccessPopup(false);
+                      router.push("/Mybooking");
+                    }}
+                    className="w-1/2 bg-custom-green text-white py-2 rounded-lg font-medium shadow cursor-pointer"
+                  >
+                    My Orders
+                  </button>
+                )}
+                
+                {/* Guest Track Order - Commented out */}
+                {/* {!isLoggedIn && (
+                  <button
+                    onClick={() => {
+                      setSuccessPopup(false);
+                      router.push(`/track-order?orderId=${orderId}&email=${guestInfo.email}`);
+                    }}
+                    className="w-1/2 bg-custom-green text-white py-2 rounded-lg font-medium shadow cursor-pointer"
+                  >
+                    Track Order
+                  </button>
+                )} */}
               </div>
             </div>
           </div>

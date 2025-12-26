@@ -1,5 +1,5 @@
 const constant = {
-    currency: "Rs"
+    currency: "INR"
 }
 
 export default constant

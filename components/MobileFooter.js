@@ -6,7 +6,7 @@ import { FaFirstOrder } from "react-icons/fa6";
 import { useRouter } from "next/router";
 import { cartContext, openCartContext } from "@/pages/_app";
 import { useTranslation } from "react-i18next";
-import { ListOrdered } from "lucide-react";
+import { ListOrdered, LayoutGrid } from "lucide-react";
 
 function MobileFooter() {
   const router = useRouter();
@@ -16,6 +16,11 @@ function MobileFooter() {
   const [cartData] = useContext(cartContext);
 
   const menuItems = [
+    {
+      label: t("Categories"),
+      icon: LayoutGrid,
+      path: "/AllCategory",
+    },
     {
       label: t("Home"),
       icon: IoHomeOutline,
@@ -29,7 +34,7 @@ function MobileFooter() {
     {
       label: t("Cart"),
       icon: FiShoppingCart,
-      path: "/Cart", // Special case for cart toggle
+      path: "/Cart",
       isCart: true,
     },
     {
@@ -42,7 +47,7 @@ function MobileFooter() {
   const cartlenth = cartData.reduce((total, item) => total + (item.qty || 0), 0)
 
   return (
-    <div className="bg-custom-green w-full grid grid-cols-4 rounded-t-[30px]">
+    <div className="bg-custom-green w-full grid grid-cols-5 rounded-t-[30px]">
       {menuItems.map((item, idx) => {
         const isActive = currentPath === item.path;
 

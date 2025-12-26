@@ -199,7 +199,7 @@ function Mybooking(props) {
 
   const getBookingsByUser = async () => {
     props.loader(true);
-    Api("get", "NewgetrequestProductbyuser ", "", router).then(
+    Api("get", "NewgetrequestProductbyuser", "", router).then(
       (res) => {
         props.loader(false);
         setBookingsData(res.data);

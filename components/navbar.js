@@ -798,6 +798,16 @@ const Navbar = (props) => {
                         {t("My Order")}
                         <IoIosArrowForward className="text-xl" />
                       </li>
+                      {/* <li
+                        className="px-4 py-2 hover:bg-white/10 flex justify-between items-center cursor-pointer"
+                        onClick={() => {
+                          setShowHover(false);
+                          router.push("/track-order")
+                        }}
+                      >
+                        {t("Track Order")}
+                        <IoIosArrowForward className="text-xl" />
+                      </li> */}
                       <li
                         className="px-4 py-2 hover:bg-white/10 flex justify-between items-center cursor-pointer"
                         onClick={() => {
@@ -920,7 +930,7 @@ const Navbar = (props) => {
               onChange={(e) => handleClick(e.target.value)}
             >
               <option value="en">EN</option>
-              <option value="vi">VI</option>
+              <option value="fr">FR</option>
             </select>
 
             <div
@@ -1421,7 +1431,7 @@ const Navbar = (props) => {
                                 }
                               }}
                             >
-                              <IoRemoveSharp className="h-[30px] w-[30px] text-white" />
+                              <IoRemoveSharp className="h-[30px] w-[30px] text-black" />
                             </div>
                             <p className="text-black md:text-xl text-lg font-medium text-center mx-5">
                               {item?.qty}
@@ -1449,14 +1459,13 @@ const Navbar = (props) => {
                                 );
                               }}
                             >
-                              <IoAddSharp className="h-[30px] w-[30px] text-white" />
+                              <IoAddSharp className="h-[30px] w-[30px] text-black" />
                             </div>
                           </div>
                         </div>
                         <div className="flex md:justify-center justify-start md:items-center items-start  md:mt-0 mt-5 gap-5">
                           <p className="text-custom-purple font-semibold text-base">
-                            {constant.currency}
-                            {item?.total}
+                            {constant.currency} {item?.total}
                             {/* {item?.price_slot?.other_price && (
                               <del className="text-custom-red font-normal text-xs ml-2">
                                 {constant.currency}

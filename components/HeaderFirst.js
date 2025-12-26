@@ -76,8 +76,8 @@ const HeaderFirst = (props) => {
           <div className="hidden flex-1 lg:flex justify-center lg:space-x-8">
             <p
               className={`text-[16px] font-medium transition-transform duration-300 hover:-translate-y-[5px]  cursor-pointer  ${selectedTab === "home"
-                ? "text-white"
-                : "text-custom-black hover:!text-white"
+                ? "text-black font-bold"
+                : "text-black hover:!text-gray-600"
                 }`}
               onClick={(e) => {
                 e.preventDefault();
@@ -89,8 +89,8 @@ const HeaderFirst = (props) => {
             <div className=" ml-4 relative flex transition-transform duration-300 hover:-translate-y-[5px]" ref={dropdownRef}>
               <button
                 className={`text-[16px] font-medium cursor-pointer inline-flex items-center ${selectedTab === "AllCategory"
-                  ? "text-white"
-                  : "text-custom-black hover:!text-white"
+                  ? "text-black font-bold"
+                  : "text-black hover:!text-gray-600"
                   }`}
                 onClick={(e) => {
                   e.preventDefault();
@@ -164,8 +164,8 @@ const HeaderFirst = (props) => {
             <p
               className={`text-[16px] font-medium transition-transform duration-300 hover:-translate-y-[5px]  cursor-pointer ml-2 
     ${selectedTab === "AboutUs"
-                  ? "text-white"
-                  : "text-custom-black hover:!text-white"
+                  ? "text-black font-bold"
+                  : "text-black hover:!text-gray-600"
                 }
   `}
               onClick={(e) => {
@@ -177,8 +177,8 @@ const HeaderFirst = (props) => {
             </p>
             <p
               className={`text-[16px] font-medium cursor-pointer transition-transform duration-300 hover:-translate-y-[5px] ml-2 ${selectedTab === "Contact"
-                ? "text-white"
-                : "text-custom-black hover:!text-white"
+                ? "text-black font-bold"
+                : "text-black hover:!text-gray-600"
                 }`}
               onClick={(e) => {
                 e.preventDefault();
@@ -190,8 +190,8 @@ const HeaderFirst = (props) => {
 
             <p
               className={`text-[16px] font-medium transition-transform duration-300 hover:-translate-y-[5px] cursor-pointer ml-2 ${selectedTab === "StoreLocation"
-                ? "text-white"
-                : "text-custom-black hover:!text-white"
+                ? "text-black font-bold"
+                : "text-black hover:!text-gray-600"
                 }`}
               onClick={(e) => {
                 e.preventDefault();
