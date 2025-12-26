@@ -1483,7 +1483,7 @@ function Cart(props) {
               </p>
 
               {/* Buttons */}
-              <div className="flex justify-between gap-4 mt-6">
+              {/* <div className="flex justify-between gap-4 mt-6">
                 <button
                   onClick={() => {
                     setSuccessPopup(false);
@@ -1505,9 +1505,8 @@ function Cart(props) {
                     My Orders
                   </button>
                 )}
-                
-                {/* Guest Track Order - Commented out */}
-                {/* {!isLoggedIn && (
+              
+                {!isLoggedIn && (
                   <button
                     onClick={() => {
                       setSuccessPopup(false);
@@ -1517,8 +1516,8 @@ function Cart(props) {
                   >
                     Track Order
                   </button>
-                )} */}
-              </div>
+                )}
+              </div> */}
             </div>
           </div>
         )}
