@@ -40,11 +40,11 @@ function FranchiseOpportunity(props) {
     return (
         <>
             <Head>
-                <title>Start a Bachhoahouston Franchise – Profitable & Trusted</title>
-                <meta name="description" content="Join the Bachhoahouston family! Own a proven retail franchise with food, grocery & delivery services. Start your franchise journey" />
+                <title>Start a Oorumittai Franchise – Profitable & Trusted</title>
+                <meta name="description" content="Join the Oorumittai family! Own a proven retail franchise with food, grocery & delivery services. Start your franchise journey" />
                 <link
                     rel="canonical"
-                    href="https://www.bachhoahouston.com/FranchiseOpportunity"
+                    href="https://www.Oorumittai.com/FranchiseOpportunity"
                 />
             </Head>
             <div className="relative min-h-screen md:mt-10 mt-8">

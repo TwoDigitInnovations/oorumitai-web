@@ -47,11 +47,11 @@ function JoinOurDelievryTeam(props) {
         <>
             <Head>
                 <title>
-                    Delivery Driver Opportunity – Join Bachhoahouston Team</title>
-                <meta name="description" content="Explore a rewarding delivery driver opportunity with Bachhoahouston. Earn well while helping deliver quality groceries and essentials fast!" />
+                    Delivery Driver Opportunity – Join Oorumittai Team</title>
+                <meta name="description" content="Explore a rewarding delivery driver opportunity with Oorumittai. Earn well while helping deliver quality groceries and essentials fast!" />
                 <link
                     rel="canonical"
-                    href="https://www.bachhoahouston.com/JoinOurDelievryTeam"
+                    href="https://www.Oorumittai.com/JoinOurDelievryTeam"
                 />
             </Head>
             <div className="relative min-h-screen md:mt-4 mt-9">

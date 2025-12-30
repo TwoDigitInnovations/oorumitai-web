@@ -745,7 +745,7 @@ function Mybooking(props) {
                 {/* Expanded Order Details */}
                 <div
                   className={
-                    expandedBookingId === booking._id ? "hidden" : "block p-4"
+                    expandedBookingId === booking._id ? "block p-4" : "hidden"
                   }
                 >
                   <div className="rounded-lg border border-gray-200 overflow-hidden">

@@ -46,11 +46,11 @@ function PrivacyPolicy(props) {
   return (
     <>
       <Head>
-        <title> Customer Privacy Policy – Bachhoahouston Retail Store</title>
-        <meta name="description" content="Read our customer privacy policy to learn how we protect your information while shopping for groceries, beauty products, and more at Bachhoahouston." />
+        <title> Customer Privacy Policy – Oorumittai Retail Store</title>
+        <meta name="description" content="Read our customer privacy policy to learn how we protect your information while shopping for groceries, beauty products, and more at Oorumittai." />
          <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/PrivacyPolicy"
+          href="https://www.Oorumittai.com/PrivacyPolicy"
         />
       </Head>
         <div className="relative min-h-screen md:mt-12 mt-9">

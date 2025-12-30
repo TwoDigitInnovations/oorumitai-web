@@ -45,11 +45,11 @@ function Favourite(props) {
   return (
     <>
       <Head>
-        <title>Your Personalized Shopping List – Bachhoahouston</title>
-        <meta name="description" content="Easily access your personalized shopping list of favorite groceries, beauty, and more at Bachhoahouston. Shop faster and smarter today!" />
+        <title>Your Personalized Shopping List – Oorumittai</title>
+        <meta name="description" content="Easily access your personalized shopping list of favorite groceries, beauty, and more at Oorumittai. Shop faster and smarter today!" />
         <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/Favourite"
+          href="https://www.Oorumittai.com/Favourite"
         />
       </Head>
       <div className="mx-auto max-w-7xl md:py-6 py-4 px-3 min-h-screen mt-8">

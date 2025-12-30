@@ -198,11 +198,11 @@ function Categories(props) {
   return (
     <>
       <Head>
-        <title>{categoryData?.metatitle || "Shop All Categories – Bachhoahouston Retail Store"}</title>
-        <meta name="description" content={categoryData?.metadescription || "Explore and shop all categories from groceries to beauty, books, and home goods at Bachhoahouston. Delivery and pickup options available"} />
+        <title>{categoryData?.metatitle || "Shop All Categories – Oorumittai Retail Store"}</title>
+        <meta name="description" content={categoryData?.metadescription || "Explore and shop all categories from groceries to beauty, books, and home goods at Oorumittai. Delivery and pickup options available"} />
         <link
           rel="canonical"
-          href={`https://www.bachhoahouston.com/categories/${categoryData?.slug}`}
+          href={`https://www.Oorumittai.com/categories/${categoryData?.slug}`}
         />
       </Head>
       <div className="bg-white w-full min-h-screen" ref={topRef}>

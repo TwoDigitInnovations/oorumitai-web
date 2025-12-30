@@ -27,7 +27,7 @@ const Invoice = ({ order }) => {
 
   const orderDateTime = `${formattedDate} ${formattedTime}`;
 
-  const website = "www.bachhoahouston.com";
+  const website = "www.Oorumittai.com";
 
   const orderData = {
     id: invoiceId,
@@ -115,7 +115,7 @@ const Invoice = ({ order }) => {
             <h1
               style={{ fontSize: "2rem", fontWeight: "bold", color: "#f38529" }}
             >
-              BACH HOA HOUSTON
+              Oorumittai
             </h1>
             <p style={{ fontSize: "0.875rem" }}>{website}</p>
           </div>
@@ -334,8 +334,8 @@ const Invoice = ({ order }) => {
         </div>
 
         <div style={{ marginTop: "2rem", textAlign: "center" }}>
-          <p>Thank you for shopping with BACH HOA HOUSTON</p>
-          <p>For queries, contact us at contact@bachhoahouston.com</p>
+          <p>Thank you for shopping with Oorumittai</p>
+          <p>For queries, contact us at contact@Oorumittai.com</p>
         </div>
       </div>
     </div>

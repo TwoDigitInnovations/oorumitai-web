@@ -379,7 +379,7 @@ function ProductDetails(props) {
         <meta name="description" content={productsId?.metadescription} />
         <link
           rel="canonical"
-          href={`https://www.bachhoahouston.com/product-details/${productsId?.slug}`}
+          href={`https://www.Oorumittai.com/product-details/${productsId?.slug}`}
         />
       </Head>
       <div className="bg-white w-full">
@@ -452,7 +452,7 @@ function ProductDetails(props) {
                                 height={400}
                                 className="h-[500px] w-full object-contain cursor-move"
                                 src={item}
-                                alt={productsId?.imageAltName || "bachahoustan image"}
+                                alt={productsId?.imageAltName || "Oorumittai image"}
                               />
                             </TransformComponent>
                             <div className="absolute bottom-4 right-4 flex gap-2 z-10">

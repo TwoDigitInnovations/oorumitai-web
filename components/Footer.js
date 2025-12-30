@@ -43,7 +43,7 @@ const Footer = () => {
               <a
                 aria-label="Instagram"
                 className="text-black border-2 rounded-full w-[40px] h-[40px] border-black flex justify-center items-center transition-transform duration-300 hover:-translate-y-[8px]"
-                href="https://www.instagram.com/bachhoahouston2025/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#"
+                href="https://www.instagram.com/oorukadai/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -52,7 +52,7 @@ const Footer = () => {
               <a
                 aria-label="Facebook Group"
                 className="text-black border-2 rounded-full w-[40px] h-[40px] border-black flex justify-center items-center transition-transform duration-300 hover:-translate-y-[8px]"
-                href="https://www.facebook.com/people/Bach-Hoa-Houston/61579418325421/"
+                href="https://www.facebook.com/people/Oorukadai-Pondy/pfbid09sCPWauWqDiJYMvu8x4A8faFF78SFfK5uH7MEFkD5ZDF2D8c3vCtNxbz8wcC82R3l/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li className="flex items-center transition-transform duration-300 hover:-translate-y-[8px]">
                   <Mail className="text-2xl mr-2" aria-hidden="true" />
                   <a
-                    href="mailto:contact@bachhoahouston.com"
+                    href="mailto:contact@Oorumittai.com"
                     className="text-[16px] md:text-[19px]"
                   >
                     contact@Oorumittai.com
@@ -177,7 +177,7 @@ const Footer = () => {
           </div>
 
           {/* App Store Buttons */}
-          <div className="flex flex-row items-center justify-center gap-3 md:mb-0 mb-10">
+          {/* <div className="flex flex-row items-center justify-center gap-3 md:mb-0 mb-10">
             <a
               href="www.apple.com/app/oorukdai"
               target="_blank"
@@ -224,7 +224,7 @@ const Footer = () => {
                 />
               </div>
             </a>
-          </div>
+          </div> */}
 
         </div>
       </div>

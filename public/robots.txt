@@ -11,7 +11,7 @@ Disallow: /cache/
 Disallow: /cgi-bin/
 
 # Host
-Host: https://www.bachhoahouston.com/
+Host: https://www.Oorumittai.com/
 
 # Sitemaps
-Sitemap: https://www.bachhoahouston.com/sitemap.xml
+Sitemap: https://www.Oorumittai.com/sitemap.xml

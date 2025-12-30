@@ -40,11 +40,11 @@ function StoreLocation(props) {
     <>
       <Head>
         <title>
-          Find a Bachhoahouston Vietnamese Grocery Store Near You</title>
-        <meta name="description" content="Visit your nearest Bachhoahouston Vietnamese grocery store for fresh foods, beauty, books & more. Curbside pickup & delivery available!" />
+          Find a Oorumittai Vietnamese Grocery Store Near You</title>
+        <meta name="description" content="Visit your nearest Oorumittai Vietnamese grocery store for fresh foods, beauty, books & more. Curbside pickup & delivery available!" />
          <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/StoreLocation"
+          href="https://www.Oorumittai.com/StoreLocation"
         />
       </Head>
       <div className="relative min-h-screen md:mt-10 mt-10">

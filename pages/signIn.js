@@ -78,12 +78,12 @@ const SignIn = (props) => {
   return (
     <>
       <Head>
-        <title>Secure Customer Login – Bachhoahouston Online Store</title>
+        <title>Secure Customer Login – Oorumittai Online Store</title>
         <meta name="description"
-          content="Access your secure customer login to manage orders, pickup, delivery & more. Enjoy a smooth shopping experience at Bachhoahouston today!" />
+          content="Access your secure customer login to manage orders, pickup, delivery & more. Enjoy a smooth shopping experience at Oorumittai today!" />
         <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/signIn"
+          href="https://www.Oorumittai.com/signIn"
         />
       </Head>
       <div className="font-sans  flex flex-col items-center justify-center md:min-h-[670px] min-h-[750px] w-full">
@@ -165,7 +165,7 @@ const SignIn = (props) => {
                 <div className="absolute right-4 cursor-pointer">
                   {!eyeIcon && (
                     <IoEyeOffOutline
-                      className="w-[20px] h-[20px] text-gray-400"
+                      className="w-[20px] h-[20px] text-black"
                       onClick={() => {
                         setEyeIcon(true);
                       }}
@@ -173,7 +173,7 @@ const SignIn = (props) => {
                   )}
                   {eyeIcon && (
                     <IoEyeOutline
-                      className="w-[20px] h-[20px] text-gray-400"
+                      className="w-[20px] h-[20px] text-black"
                       onClick={() => {
                         setEyeIcon(false);
                       }}

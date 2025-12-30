@@ -89,7 +89,7 @@ function MainHeader() {
             >
               <Image
                 src={img.image || "/fallback.jpg"}
-                alt={`Bachahoustan banner ${idx}`}
+                alt={`Oorumittai banner ${idx}`}
                 fill
                 style={{ objectFit: "cover" }}
               />

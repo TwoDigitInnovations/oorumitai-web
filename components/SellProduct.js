@@ -178,17 +178,17 @@ const SellProduct = ({ loader, toaster }) => {
                   className="bg-white w-full rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-4 relative flex flex-col"
                 >
                   {/* Category Badge */}
-                  <div className="absolute top-3 left-3 bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full z-10">
+                  <div className="absolute top-3 left-3 bg-yellow-100 text-black text-xs font-medium px-3 py-1 rounded-full z-10">
                     {item.product?.categoryName}
                   </div>
 
                   {/* Sale Timer */}
                   {currentSale?.status !== "expired" && (
-                    <div className="md:flex flex-col hidden  absolute md:top-3 md:right-3 bg-custom-lightGreen text-custom-green text-xs md:px-4 px-6 py-1 rounded-md z-10">
-                      <p className="font-semibold text-[12px]">
+                    <div className="md:flex flex-col hidden  absolute md:top-3 md:right-3 bg-[#FFE27D] text-custom-green text-xs md:px-4 px-6 py-1 rounded-md z-10">
+                      <p className="font-semibold text-black text-[12px]">
                         {currentSale?.status === "active" ? "Sale ends in" : "Sale starts soon"}
                       </p>
-                      <div className="flex gap-1 text-[10px] font-bold">
+                      <div className="flex gap-1 text-[10px] text-black font-bold">
                         <div>{currentSale?.days}d</div>:
                         <div>{currentSale?.hours}h</div>:
                         <div>{currentSale?.minutes}m</div>:

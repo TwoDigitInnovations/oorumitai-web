@@ -42,11 +42,11 @@ function ProductRecallInfo(props) {
         <>
             <Head>
                 <title>
-                    Product Recall Updates – Bachhoahouston Customer Care</title>
-                <meta name="description" content="Stay informed with the latest product recall updates from Bachhoahouston. We prioritize your safety with fast, transparent notifications." />
+                    Product Recall Updates – Oorumittai Customer Care</title>
+                <meta name="description" content="Stay informed with the latest product recall updates from Oorumittai. We prioritize your safety with fast, transparent notifications." />
                 <link
                     rel="canonical"
-                    href="https://www.bachhoahouston.com/ProductRecallInfo"
+                    href="https://www.Oorumittai.com/ProductRecallInfo"
                 />
             </Head>
             <div className="relative min-h-screen md:mt-10 mt-9">

@@ -41,11 +41,11 @@ function Termsandcondition(props) {
 
   return (<>
     <Head>
-      <title>Retail Store Terms and Conditions – Bachhoahouston</title>
-      <meta name="description" content="Review our retail store terms and conditions to understand your rights on orders, delivery, returns & more. Shop with confidence at Bachhoahouston." />
+      <title>Retail Store Terms and Conditions – Oorumittai</title>
+      <meta name="description" content="Review our retail store terms and conditions to understand your rights on orders, delivery, returns & more. Shop with confidence at Oorumittai." />
       <link
         rel="canonical"
-        href="https://www.bachhoahouston.com/Termsandcondition"
+        href="https://www.Oorumittai.com/Termsandcondition"
       />
     </Head>
     <div className="relative md:mt-12 mt-9">

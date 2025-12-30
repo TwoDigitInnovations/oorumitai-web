@@ -129,11 +129,11 @@ const FeedbackForm = (props) => {
   return (
     <>
       <Head>
-        <title>Contact Us – Bachhoahouston Vietnamese Specialty Food</title>
-        <meta name="description" content="Join the Bachhoahouston family! Own a proven retail franchise with food, grocery & delivery services. Start your franchise journey" />
+        <title>Contact Us – Oorumittai Vietnamese Specialty Food</title>
+        <meta name="description" content="Join the Oorumittai family! Own a proven retail franchise with food, grocery & delivery services. Start your franchise journey" />
         <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/ContactUs"
+          href="https://www.Oorumittai.com/ContactUs"
         />
       </Head>
 
@@ -144,7 +144,15 @@ const FeedbackForm = (props) => {
             {/* Left Side - Content */}
             <div className="flex flex-col justify-start">
               <div className="mb-6">
-                <p className="text-gray-500 text-sm mb-2 font-poppins">Home › {t("Contact Us")}</p>
+                <p className="text-gray-500 text-sm mb-2 font-poppins">
+                  <span 
+                    onClick={() => router.push("/")} 
+                    className="cursor-pointer hover:text-[#F9C60A] transition-colors"
+                  >
+                    Home
+                  </span>
+                  {" › "}{t("Contact Us")}
+                </p>
                 <h1 className="text-black font-poppins font-light text-[88px] leading-[116px] tracking-normal">
                   {t("Get in-touch")}<br />{t("with us")}!
                 </h1>
@@ -158,7 +166,7 @@ const FeedbackForm = (props) => {
                 <div>
                   <p className="text-gray-700 font-medium mb-1">{t("Email")}:</p>
                   <a
-                    href="mailto:contact@bachhoahouston.com"
+                    href="mailto:contact@Oorumittai.com"
                     className="text-black text-lg font-poppins hover:text-blue-600 transition"
                   >
                     contact@Oorumittai.com

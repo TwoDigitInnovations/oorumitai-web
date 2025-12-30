@@ -43,11 +43,11 @@ function HelpCenter(props) {
         <>
             <Head>
                 <title>
-                    Customer Support Center – Help at Bachhoahouston</title>
-                <meta name="description" content="Visit our customer support center for quick answers on orders, delivery, pickup, and more. We're here to help at Bachhoahouston every day!" />
+                    Customer Support Center – Help at Oorumittai</title>
+                <meta name="description" content="Visit our customer support center for quick answers on orders, delivery, pickup, and more. We're here to help at Oorumittai every day!" />
                 <link
                     rel="canonical"
-                    href="https://www.bachhoahouston.com/HelpCenter"
+                    href="https://www.Oorumittai.com/HelpCenter"
                 />
             </Head>
             <div className="relative min-h-screen md:mt-10 mt-9">

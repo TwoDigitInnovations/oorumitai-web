@@ -1,6 +1,6 @@
 const contactInfo = {
-  name: "Bach Hoa Houston",
-  email: "contact@bachhoahouston.com",
+  name: "Oorumittai",
+  email: "contact@Oorumittai.com",
   phone: "832-230-9288",
 };
 

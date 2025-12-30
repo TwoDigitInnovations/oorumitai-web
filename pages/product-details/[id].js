@@ -334,7 +334,7 @@ function ProductDetails(props) {
         <meta name="description" content={productsId?.metadescription} />
         <link
           rel="canonical"
-          href={`https://www.bachhoahouston.com/product-details/${productsId?.slug}`}
+          href={`https://www.Oorumittai.com/product-details/${productsId?.slug}`}
         />
       </Head>
       <div className="bg-white w-full max-w-7xl mx-auto md:pt-10 pt-14 md:pb-10 pb-5 md:px-0 px-3">
@@ -674,7 +674,7 @@ export default ProductDetails;
 export async function getServerSideProps(context) {
   const { id } = context.params;
 
-  const baseUrl = ConstantsUrl; // example: https://api.bachhoahouston.com
+  const baseUrl = ConstantsUrl; // example: https://api.Oorumittai.com
 
   try {
     // const productRes = await fetch(`${baseUrl}getProductByslug/${id}`);

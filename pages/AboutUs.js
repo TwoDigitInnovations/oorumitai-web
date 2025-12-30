@@ -16,16 +16,16 @@ const services = [
     description: "Pick it up inside the store",
     icon: <FaStore className="md:text-5xl text-4xl mb-2" />,
   },
-  {
-    title: "Curbside Pickup",
-    description: "We bring it out to your car",
-    icon: <FaCarSide className="md:text-5xl text-4xl mb-2" />,
-  },
-  {
-    title: "Next Day Local Delivery",
-    description: "Cut off time 8 pm",
-    icon: <FaTruck className="md:text-5xl text-4xl mb-2" />,
-  },
+  // {
+  //   title: "Curbside Pickup",
+  //   description: "We bring it out to your car",
+  //   icon: <FaCarSide className="md:text-5xl text-4xl mb-2" />,
+  // },
+  // {
+  //   title: "Next Day Local Delivery",
+  //   description: "Cut off time 8 pm",
+  //   icon: <FaTruck className="md:text-5xl text-4xl mb-2" />,
+  // },
   {
     title: "Shipping",
     description: "Delivery in 3 to 5 business days",
@@ -86,11 +86,11 @@ const AboutUs = (props) => {
   return (
     <>
       <Head>
-        <title>About Bachhoahouston – Vietnamese Specialty Food Store</title>
-        <meta name="description" content="Discover Bachhoahouston, your trusted Vietnamese specialty food store offering groceries, home delivery & more. Rooted in culture, built on care" />
+        <title>About Oorumittai –  Specialty Food Store</title>
+        <meta name="description" content="Discover Oorumittai, your trusted Vietnamese specialty food store offering groceries, home delivery & more. Rooted in culture, built on care" />
         <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/AboutUs"
+          href="https://www.Oorumittai.com/AboutUs"
         />
       </Head>
 

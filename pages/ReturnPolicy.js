@@ -39,11 +39,11 @@ function ReturnPolicy(props) {
     <>
       <Head>
         <title>
-          Return Policy – Shop Confidently at Bachhoahouston</title>
-        <meta name="description" content="Learn about our flexible retail return policy for groceries, beauty, and more. Bachhoahouston ensures a smooth and worry-free experience" />
+          Return Policy – Shop Confidently at Oorumittai</title>
+        <meta name="description" content="Learn about our flexible retail return policy for groceries, beauty, and more. Oorumittai ensures a smooth and worry-free experience" />
          <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/ReturnPolicy"
+          href="https://www.Oorumittai.com/ReturnPolicy"
         />
       </Head>
       <div className="relative min-h-screen md:mt-12 mt-9">

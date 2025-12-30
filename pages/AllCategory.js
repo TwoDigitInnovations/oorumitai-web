@@ -35,11 +35,11 @@ const Category = (props) => {
   return (
     <>
       <Head>
-        <title>Shop All Categories – Bachhoahouston Retail Store</title>
-        <meta name="description" content="Explore and shop all categories from groceries to beauty, books, and home goods at Bachhoahouston. Delivery and pickup options available" />
+        <title>Shop All Categories – Oorumittai Retail Store</title>
+        <meta name="description" content="Explore and shop all categories from groceries to beauty, books, and home goods at Oorumittai. Delivery and pickup options available" />
         <link
           rel="canonical"
-          href="https://www.bachhoahouston.com/AllCategory"
+          href="https://www.Oorumittai.com/AllCategory"
         />
       </Head>
       <div className="max-w-7xl md:mt-12 mt-12 md:px-4 px-4 mx-auto bg-white">
