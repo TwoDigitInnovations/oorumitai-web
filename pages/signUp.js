@@ -284,36 +284,35 @@ const SignUp = (props) => {
                 )}
               </div>
 
-              <div className="relative flex items-center w-full md:w-[80%] md:mb-6">
-                <label className="text-gray-800 bg-white absolute px-2 md:top-[-18px] top-[-12px] left-[18px] text-[14px] md:text-[18px]">
-                  {t("Password")}
-                </label>
-                <input
-                  type={eyeIcon ? "text" : "password"}
-                  name="password"
-                  placeholder="***********"
-                  value={userDetail.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className="px-4 py-3 bg-white w-full border-2 border-[#000000] rounded-xl outline-none text-[16px] text-black md:text-[18px]"
-                  
-                />
-                <div
-                  className="absolute right-4 cursor-pointer"
-                  onClick={() => setEyeIcon(!eyeIcon)}
-                >
-                  {eyeIcon ? (
-                    <IoEyeOutline className="w-[20px] h-[20px] text-custom-gray" />
-                  ) : (
-                    <IoEyeOffOutline className="w-[20px] h-[20px] text-custom-gray" />
-                  )}
-                </div>
-                {errors.password && (
-                  <p className="absolute bottom-[-20px] left-0 text-red-500 text-xs">
-                    {errors.password}
-                  </p>
-                )}
-              </div>
+        <div className="relative flex items-center w-full md:w-[80%] mb-9 md:mb-6">
+  <label className="text-gray-800 bg-white absolute px-2 md:top-[-18px] top-[-12px] left-[18px] text-[14px] md:text-[18px]">
+    {t("Password")}
+  </label>
+  <input
+    type={eyeIcon ? "text" : "password"}
+    name="password"
+    placeholder="***********"
+    value={userDetail.password}
+    onChange={handleChange}
+    onBlur={handleBlur}
+    className="px-4 py-3 pr-12 bg-white w-full border-2 border-[#000000] rounded-xl outline-none text-[16px] text-black md:text-[18px]"
+  />
+  <div
+    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer z-10"
+    onClick={() => setEyeIcon(!eyeIcon)}
+  >
+    {eyeIcon ? (
+      <IoEyeOutline className="w-[20px] h-[20px] text-black" />
+    ) : (
+      <IoEyeOffOutline className="w-[20px] h-[20px] text-black" />
+    )}
+  </div>
+  {errors.password && (
+    <p className="absolute bottom-[-20px] left-0 text-red-500 text-xs">
+      {errors.password}
+    </p>
+  )}
+</div>
 
               <div className="mt-2 w-full md:w-[80%]">
                 <p className="text-[#A7A9AA] text-center md:w-[62%] py-1.5 mx-auto text-[14px]">{t("By Clicking Sign up you agree with our")} <span className="cursor-pointer font-bold text-gray-800"
