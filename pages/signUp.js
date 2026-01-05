@@ -162,15 +162,15 @@ const SignUp = (props) => {
   return (
     <>
       <Head>
-        <title>Vietnamese Groceries Delivered Fresh to Your Door</title>
+        <title>Oorumittai Delivered Fresh to Your Door</title>
         <meta name="description"
-          content="Get authentic Vietnamese groceries delivered fresh to your doorstep. Enjoy vegetables, snacks, seafood, and more with fast, reliable service" />
+          content="Get authentic Oorumittai delivered fresh to your doorstep. Enjoy vegetables, snacks, seafood, and more with fast, reliable service" />
         <link
           rel="canonical"
           href="https://www.Oorumittai.com/signUp"
         />
       </Head>
-      <div className="font-sans flex flex-col items-center justify-center md:min-h-[750px]">
+      <div className="font-sans flex flex-col items-center justify-center md:min-h-[750px] md:mt-0 mt-16">
         <div className="max-w-7xl mx-auto w-full">
 
           <div className="flex md:hidden flex-col justify-center items-center">  <h1 className="mt-8 text-[34px] md:text-[48px] text-black">
@@ -182,7 +182,7 @@ const SignUp = (props) => {
             </p>
             <div className=" w-full h-[120px] justify-center items-center relative mb-4">
               <Image
-                src="/ladies.png"
+                src="/imgg.png"
                 alt="Sign In"
                 fill
                 className="object-contain" // ensures image covers the parent
@@ -343,16 +343,16 @@ const SignUp = (props) => {
 
             <div className="md:flex hidden rounded-tr-[22px] rounded-br-[22px] bg-[#FFEBAE]  flex-col justify-center items-center ">
 
-              <h1 className="mt-4 text-[34px] md:text-[48px] text-black">
+              <h1 className="mt-12 text-[34px] md:text-[48px] text-black text-center mb-2">
                 {t("Welcome")}
               </h1>
-              <p className="md:text-[20px] text-[16px] text-[#858080] mt-4 mb-4">
+              <p className="md:text-[20px] text-[16px] text-[#858080] mt-4 mb-4 text-center px-8 leading-relaxed">
                 {" "}
                 {t("Please enter your sign in details")}.
               </p>
               <div className="hidden md:flex w-full h-[320px] justify-center items-center relative">
                 <Image
-                  src="/ladies.png"
+                  src="/imgg.png"
                   alt="Sign In"
                   fill
                   className="object-contain" // ensures image covers the parent
@@ -366,7 +366,7 @@ const SignUp = (props) => {
                     className="mb-4 cursor-pointer "
                    height={100}
                     width={200}
-                    src="/logonew.png"
+                    src="/2logo.png"
                     priority
                   />
                 </Link>

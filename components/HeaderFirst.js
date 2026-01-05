@@ -86,9 +86,9 @@ const HeaderFirst = (props) => {
             >
               {t("Home")}
             </p>
-            <div className=" ml-4 relative flex transition-transform duration-300 hover:-translate-y-[5px]" ref={dropdownRef}>
+            <div className=" ml-4 relative flex items-center transition-transform duration-300 hover:-translate-y-[5px]" ref={dropdownRef}>
               <button
-                className={`text-[16px] font-medium cursor-pointer inline-flex items-center ${selectedTab === "AllCategory"
+                className={`text-[16px] font-medium cursor-pointer inline-flex items-center whitespace-nowrap ${selectedTab === "AllCategory"
                   ? "text-black font-bold"
                   : "text-black hover:!text-gray-600"
                   }`}
@@ -101,7 +101,7 @@ const HeaderFirst = (props) => {
               </button>
 
               <IoIosArrowDown
-                className="text-2xl cursor-pointer ml-1 text-black"
+                className="text-2xl cursor-pointer ml-1 text-black flex-shrink-0"
                 onClick={(e) => {
                   e.stopPropagation();
                   setDropdownOpen((prev) => !prev);
@@ -124,16 +124,16 @@ const HeaderFirst = (props) => {
                           );
                         }}
                       >
-                        <p className="px-4 py-1.5 text-white text-[16px]">
+                        <p className="px-4 py-1.5 text-black text-[16px]">
                           {cat.name}
                         </p>
-                        <IoIosArrowForward className="text-2xl mt-2 mr-1 text-white" />
+                        <IoIosArrowForward className="text-2xl mt-2 mr-1 text-black" />
                       </div>
                     </div>
                   ))}
 
                   <p
-                    className=" px-4 py-1.5 text-white text-[16px] cursor-pointer"
+                    className=" px-4 py-1.5 text-black text-[16px] cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       setDropdownOpen(false);

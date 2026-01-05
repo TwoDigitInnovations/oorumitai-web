@@ -87,7 +87,7 @@ const AboutUs = (props) => {
     <>
       <Head>
         <title>About Oorumittai –  Specialty Food Store</title>
-        <meta name="description" content="Discover Oorumittai, your trusted Vietnamese specialty food store offering groceries, home delivery & more. Rooted in culture, built on care" />
+        <meta name="description" content="Discover Oorumittai, your trusted Oorumittai specialty food store offering groceries, home delivery & more. Rooted in culture, built on care" />
         <link
           rel="canonical"
           href="https://www.Oorumittai.com/AboutUs"

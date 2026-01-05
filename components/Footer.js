@@ -19,13 +19,13 @@ const Footer = () => {
       aria-label="Website Footer"
     >
       <div className="container mx-auto xl:max-w-7xl border-b-[2px] w-[90%] border-b-gray-500  pb-8">
-        <div className="relative md:w-[200px] w-[170px] md:h-48 h-48 mb-5 ">
+        <div className="relative md:w-[240px] w-[200px] md:h-48 h-48 mb-5 ">
           <Link href="/" aria-label="Go to homepage">
             <Image
               alt="logo"
               className="mb-4 cursor-pointer "
               fill
-              src="/logonew.png"
+              src="/2logo.png"
               priority
             />
           </Link>

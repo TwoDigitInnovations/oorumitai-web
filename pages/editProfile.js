@@ -312,7 +312,7 @@ const EditProfile = ({ loader, toaster }) => {
                         <p className="text-gray-600">{user?.email || profileData.email || "user@example.com"}</p>
                     </div>
                     <button
-                        className="mt-3 sm:mt-0 sm:ml-auto px-4 py-2 rounded bg-custom-green text-white hover:bg-gray-800 cursor-pointer transition"
+                        className="mt-3 sm:mt-0 sm:ml-auto px-4 py-2 rounded bg-custom-green text-black hover:bg-gray-800 cursor-pointer transition"
                         onClick={toggleEditMode}
                     >
                         {isEditing ? t('Save') : t('Edit')}
@@ -485,7 +485,7 @@ const EditProfile = ({ loader, toaster }) => {
                             </div>
                             <div className="flex justify-end">
                                 <button
-                                    className="bg-custom-green rounded-lg text-white px-4 py-2.5 hover:bg-gray-800 transition mt-4"
+                                    className="bg-custom-green rounded-lg text-black px-4 py-2.5 hover:bg-gray-800 transition mt-4"
                                     onClick={changePassword}
                                 >
                                     {t("Change Password")}

@@ -58,7 +58,7 @@ function MobileFooter() {
           >
             <div
               key={idx}
-              className={`flex flex-col justify-center items-center transition 
+              className={`relative flex flex-col justify-center items-center transition 
               ${isActive ? "bg-white text-black rounded-full w-10 h-10 m-1 p-`" : "m-1 p-1 text-white w-10 h-10"}`}
               onClick={() => {
                 router.push(item.path);
@@ -70,7 +70,7 @@ function MobileFooter() {
               />
 
               {item.label === t("Cart") && cartData.length > 0 && (
-                <div className="absolute bg-white text-custom-green rounded-full w-5 h-5 flex items-center justify-center text-[9px] top-6 right-36">
+                <div className="absolute bg-white text-custom-green rounded-full w-5 h-5 flex items-center justify-center text-[9px] -top-1 -right-1 border border-custom-green">
                   {cartlenth}
                 </div>
               )}

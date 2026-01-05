@@ -746,14 +746,14 @@ const Navbar = (props) => {
   return (
     <>
       <header className="md:shadow-none shadow-md bg-[#F9C60A] w-full sticky top-0 z-100">
-        <div className="max-w-7xl mx-auto flex items-center md:justify-between justify-center md:gap-0 gap-2 md:ps-0 ps-4 py-1.5">
+        <div className="max-w-7xl mx-auto flex items-center md:justify-between justify-between md:gap-0 gap-2 px-4 py-1.5">
 
-          <div className="relative md:w-48 w-36 md:h-16 h-12 flex items-center flex-shrink-0">
+          <div className="relative md:w-40 w-20 md:h-12 h-7 flex items-center flex-shrink-0 mr-2">
             <Image
-              src="/logonew.png"
+              src="/2logo.png"
               alt=" logo"
               fill
-              sizes="(max-width: 768px) 144px, 192px"
+              sizes="(max-width: 768px) 80px, 152px"
               className="object-contain cursor-pointer scale-[2.5]"
               onClick={() => router.push("/")}
             />
@@ -778,16 +778,16 @@ const Navbar = (props) => {
                 className="relative group cursor-pointer"
                 onClick={() => setShowHover(!showHover)}
               >
-                <div className="w-10 h-10 bg-custom-green rounded-full flex items-center justify-center border-2 border-white">
-                  <p className="text-white font-bold text-base">
+                <div className="w-10 h-10 bg-[#F9C60A] rounded-full flex items-center justify-center border-2 border-black">
+                  <p className="text-black font-bold text-base">
                     {user?.username?.charAt(0).toUpperCase() || "T"}
                   </p>
                 </div>
 
                 {/* Hover Dropdown */}
                 {showHover && (
-                  <div className="absolute right-0 top-12 bg-[#F9C60A] text-white rounded-lg shadow-lg w-56 py-2">
-                    <ul className="divide-y divide-white/20">
+                  <div className="absolute right-0 top-12 bg-[#F9C60A] text-black rounded-lg shadow-lg w-56 py-2">
+                    <ul className="divide-y divide-black/20">
                       <li
                         className="px-4 py-2 hover:bg-white/10 flex justify-between items-center cursor-pointer"
                         onClick={() => {
@@ -880,7 +880,7 @@ const Navbar = (props) => {
             >
               <ShoppingCart className="text-black" size={28} />
               {cartData.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-[#F9C60A] text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center border-2 border-[#F9C60A]">
+                <span className="absolute -top-2 -right-2 bg-white text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center border-2 border-[#F9C60A]">
                   {cartlenth}
                 </span>
               )}
@@ -888,27 +888,27 @@ const Navbar = (props) => {
 
 
             <div
-              className="relative cursor-pointer"
+              className="relative cursor-pointer p-1"
               onClick={() => router.push("/Favourite")}
             >
               <Heart className="text-black" size={28} />
               {Favorite.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-[#F9C60A] text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center border-2 border-[#F9C60A]">
+                <span className="absolute -top-1 -right-1 bg-white text-black text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center border-2 border-[#F9C60A]">
                   {Favorite.length}
                 </span>
               )}
             </div>
           </div>
 
-          <div className="md:hidden flex items-center  bg-gray-50 rounded-full px-4 py-2 border-2 relative">
-            <Search size={17} className="text-gray-400" />
+          <div className="md:hidden flex items-center flex-1 ml-1 bg-gray-50 rounded-full px-3 py-1.5 border-2 relative">
+            <Search size={16} className="text-gray-400" />
             <form onSubmit={handleSearchSubmit} className="flex-1">
               <input
                 type="text"
                 value={searchData}
                 onChange={(e) => setSearchData(e.target.value)}
                 placeholder={t("Search")}
-                className="w-full bg-transparent text-black text-sm px-2 outline-none placeholder:text-gray-400"
+                className="w-full bg-transparent text-black text-xs px-2 outline-none placeholder:text-gray-400"
               />
             </form>
             {searchData && (
@@ -917,33 +917,33 @@ const Navbar = (props) => {
                 onClick={() => setSearchData("")}
                 className="absolute right-3 text-gray-400 hover:text-gray-600 transition"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             )}
           </div>
 
-          <div className="md:hidden flex justify-end items-center gap-1">
+          <div className="md:hidden flex justify-end items-center gap-2">
+
+            <div
+              className="relative cursor-pointer"
+              onClick={() => router.push("/Favourite")}
+            >
+              <Heart className="text-black" size={24} />
+              {Favorite.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-black text-[9px] font-semibold rounded-full w-4 h-4 flex items-center justify-center border-2 border-[#F9C60A]">
+                  {Favorite.length}
+                </span>
+              )}
+            </div>
 
             <select
-              className="bg-white border border-gray-300 text-sm px-1 py-2 rounded-md text-gray-700 focus:outline-none"
+              className="bg-white border border-gray-300 text-xs px-1.5 py-1 rounded-md text-gray-700 focus:outline-none"
               value={lang}
               onChange={(e) => handleClick(e.target.value)}
             >
               <option value="en">EN</option>
               <option value="fr">FR</option>
             </select>
-
-            <div
-              className="relative cursor-pointer"
-              onClick={() => router.push("/Favourite")}
-            >
-              <Heart className="text-custom-green" size={24} />
-              {Favorite.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-white text-[#F9C60A] text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center border-2 border-[#F9C60A]">
-                  {Favorite.length}
-                </span>
-              )}
-            </div>
 
           </div>
 

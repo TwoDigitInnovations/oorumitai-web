@@ -86,8 +86,8 @@ const SignIn = (props) => {
           href="https://www.Oorumittai.com/signIn"
         />
       </Head>
-      <div className="font-sans  flex flex-col items-center justify-center md:min-h-[670px] min-h-[750px] w-full">
-        <div className="max-w-7xl mx-auto w-full">
+      <div className="font-sans flex flex-col items-center justify-center md:min-h-[670px] min-h-[750px] w-full md:mt-0 mt-16 md:px-4 md:py-8">
+        <div className="max-w-7xl mx-auto w-full px-4">
 
           <div className="flex md:hidden flex-col justify-center items-center">  <h1 className="mt-8 text-[34px] md:text-[48px] text-black">
             {t("Welcome")}
@@ -98,7 +98,7 @@ const SignIn = (props) => {
             </p>
             <div className=" w-full h-[120px] justify-center items-center relative mb-8">
               <Image
-                src="/ladies.png"
+                src="/imgg.png"
                 alt="Sign In"
                 fill
                 className="object-contain" // ensures image covers the parent
@@ -214,16 +214,15 @@ const SignIn = (props) => {
             </form>
             <div className="md:flex hidden rounded-tr-[22px] rounded-br-[22px] bg-[#FFEBAE]  flex-col justify-center items-center ">
 
-              <h1 className="mt-4 text-[34px] md:text-[48px] text-black">
+              <h1 className="mt-12 text-[34px] md:text-[48px] text-black text-center mb-2">
                 {t("Welcome")}
               </h1>
-              <p className="md:text-[20px] text-[16px] text-[#858080] mt-4 mb-4">
-                {" "}
+              <p className="md:text-[20px] text-[16px] text-[#858080] mt-4 mb-4 text-center px-8 leading-relaxed">
                 {t("Please enter your sign in details")}.
               </p>
               <div className="hidden md:flex w-full h-[320px] justify-center items-center relative">
                 <Image
-                  src="/ladies.png"
+                  src="/imgg.png"
                   alt="Sign In"
                   fill
                   className="object-contain" // ensures image covers the parent
@@ -236,7 +235,7 @@ const SignIn = (props) => {
                     alt=" logo"
                     className="mb-4 cursor-pointer "
                     
-                    src="/logonew.png"
+                    src="/2logo.png"
                     priority
                     height={100}
                     width={200}

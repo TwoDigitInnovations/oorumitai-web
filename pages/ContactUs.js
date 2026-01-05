@@ -129,7 +129,7 @@ const FeedbackForm = (props) => {
   return (
     <>
       <Head>
-        <title>Contact Us – Oorumittai Vietnamese Specialty Food</title>
+        <title>Contact Us – Oorumittai Specialty Food</title>
         <meta name="description" content="Join the Oorumittai family! Own a proven retail franchise with food, grocery & delivery services. Start your franchise journey" />
         <link
           rel="canonical"

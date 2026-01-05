@@ -657,13 +657,8 @@ function Cart(props) {
         const data = createRes.data.orders || [];
         console.log(data)
         setOrderID(data.orderId);
-        // Skip Stripe payment - direct order placement
-        // createCheckoutSession(data.orderId);
-        
-        // Show success popup directly
-        props.loader && props.loader(false);
-        emptyCart();
-        setSuccessPopup(true);
+        // Redirect to Stripe payment
+        createCheckoutSession(data.orderId);
       } else {
         props.loader && props.loader(false);
         props.toaster({ type: "error", message: "Order save failed" });
@@ -673,14 +668,6 @@ function Cart(props) {
       props.loader && props.loader(false);
       props.toaster({ type: "error", message: err?.message });
     }
-
-
-    // if (createRes.status) {
-
-    // } else {
-    //   props.loader && props.loader(false);
-    //   props.toaster({ type: "error", message: "Order save failed" });
-    // }
   };
 
   const createCheckoutSession = async (ID) => {
@@ -1246,7 +1233,7 @@ function Cart(props) {
                     <div className="mt-4">
                       {isLoggedIn ? (
                         <button
-                          className="w-full cursor-pointer bg-custom-green text-white py-3 rounded-lg font-semibold"
+                          className="w-full text-black cursor-pointer bg-custom-green  py-3 rounded-lg font-semibold"
                           onClick={() => {
                             if (cartData?.length === 0) {
                               props.toaster?.({

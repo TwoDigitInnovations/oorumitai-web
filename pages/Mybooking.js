@@ -285,7 +285,7 @@ function Mybooking(props) {
                       {/* Header with Number and Toggle */}
                       <div className="flex justify-between items-center">
                         <div className="flex items-center space-x-3">
-                          <div className="bg-custom-green text-white rounded-full h-8 w-8 flex items-center justify-center font-semibold text-sm">
+                          <div className="bg-custom-green text-black rounded-full h-8 w-8 flex items-center justify-center font-semibold text-sm">
                             {key + 1}
                           </div>
                         </div>
@@ -383,7 +383,7 @@ function Mybooking(props) {
                     {/* Desktop Layout - Original Horizontal */}
                     <div className="hidden md:flex justify-between items-center">
                       <div className="flex items-center space-x-3">
-                        <div className="bg-custom-green text-white rounded-full h-10 w-10 flex items-center justify-center font-semibold">
+                        <div className="bg-custom-green text-black rounded-full h-10 w-10 flex items-center justify-center font-semibold">
                           {key + 1}
                         </div>
                         <div className="flex flex-col">
@@ -640,7 +640,7 @@ function Mybooking(props) {
                         {booking?.isDriveUp && (
                           <button
                             onClick={() => toggleModal(booking._id)}
-                            className="px-4 py-2 bg-custom-green text-white text-sm font-medium rounded-md cursor-pointer"
+                            className="px-4 py-2 bg-custom-green text-black text-sm font-medium rounded-md cursor-pointer"
                           >
                             {booking.parkingNo
                               ? t("Update Parking Spot")
@@ -651,7 +651,7 @@ function Mybooking(props) {
                         {booking?.isOrderPickup && (
                           <button
                             onClick={() => getSecrectCode(booking._id)}
-                            className="px-4 py-2 bg-custom-green text-white text-sm font-medium rounded-md cursor-pointer"
+                            className="px-4 py-2 bg-custom-green text-black text-sm font-medium rounded-md cursor-pointer"
                           >
                             {t("I'm here")}
                           </button>

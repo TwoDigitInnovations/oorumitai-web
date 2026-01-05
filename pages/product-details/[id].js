@@ -44,6 +44,7 @@ function ProductDetails(props) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isInCart, setIsInCart] = React.useState(false);
   const [availableQty, setAvailableQty] = React.useState(0);
+  const [rotation, setRotation] = useState(0);
   console.log(props)
 
   // useEffect(() => {
@@ -340,29 +341,40 @@ function ProductDetails(props) {
       <div className="bg-white w-full max-w-7xl mx-auto md:pt-10 pt-14 md:pb-10 pb-5 md:px-0 px-3">
         <section className="bg-white w-full ">
           <div className="flex flex-wrap items-center text-gray-500 text-xs md:text-sm mt-2 mb-2 gap-1 md:ps-4">
-            <p className="font-medium">{t("Home")}</p>
+            <p 
+              className="font-medium cursor-pointer hover:text-[#F9C60A] transition-colors"
+              onClick={() => router.push("/")}
+            >
+              {t("Home")}
+            </p>
             <SlArrowRight className="text-gray-400 w-3 h-3 md:w-4 md:h-4" />
 
-            <p className="font-medium">{productsId?.categoryName}</p>
+            <p 
+              className="font-medium cursor-pointer hover:text-[#F9C60A] transition-colors"
+              onClick={() => router.push(`/categories/${productsId?.category?.slug || 'all'}`)}
+            >
+              {productsId?.categoryName}
+            </p>
             <SlArrowRight className="text-gray-400 w-3 h-3 md:w-4 md:h-4" />
 
-            <p className="font-semibold truncate max-w-xs md:max-w-sm">
+            <p className="font-semibold truncate max-w-xs md:max-w-sm text-gray-700">
               {lang === "en" ? productsId?.name : productsId?.vietnamiesName}
             </p>
           </div>
 
           <div className="w-full ">
             <div className="grid md:grid-cols-2 grid-cols-1 w-full gap-5">
-              <div className="p-[10px] rounded-[15px]">
+              <div className="p-[10px] rounded-[15px] overflow-hidden">
                 <Carousel
                   className="h-full w-full"
                   responsive={responsive}
                   autoPlay={false}
                   infinite={true}
                   arrows={true}
+                  showDots={false}
                 >
                   {selectedImageList?.map((item, i) => (
-                    <div key={i} className="bg-white w-full md:h-full relative flex justify-center">
+                    <div key={i} className="bg-white w-full md:h-full relative flex justify-center border-0">
                       <TransformWrapper
                         initialScale={1}
                         minScale={1}
@@ -370,21 +382,24 @@ function ProductDetails(props) {
                         wheel={{ step: 0.1 }}
                         doubleClick={{ disabled: true }}
                       >
-                        {({ zoomIn, zoomOut, resetTransform }) => (
+                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                           <>
                             <TransformComponent>
-                              <Image
-                                width={500}
-                                height={300}
-                                className="md:h-[500px] w-full object-contain cursor-move"
-                                src={item}
-                                alt={productsId?.imageAltName || "Product image"}
-                              />
+                              <div style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s ease' }}>
+                                <Image
+                                  width={500}
+                                  height={300}
+                                  className="md:h-[500px] w-full object-contain cursor-move"
+                                  src={item}
+                                  alt={productsId?.imageAltName || "Product image"}
+                                />
+                              </div>
                             </TransformComponent>
-                            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+                            <div className="absolute bottom-4 right-4 flex gap-2 z-20 bg-white/80 p-2 rounded-full">
                               <button
                                 onClick={() => zoomIn()}
-                                className="bg-white p-2 rounded-full shadow-lg text-black"
+                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                title="Zoom In"
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -403,7 +418,8 @@ function ProductDetails(props) {
                               </button>
                               <button
                                 onClick={() => zoomOut()}
-                                className="bg-white p-2 rounded-full shadow-lg text-black"
+                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                title="Zoom Out"
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -420,8 +436,11 @@ function ProductDetails(props) {
                                 </svg>
                               </button>
                               <button
-                                onClick={() => resetTransform()}
-                                className="bg-white p-2 rounded-full shadow-lg text-black"
+                                onClick={() => {
+                                  setRotation((prev) => prev + 90);
+                                }}
+                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                title="Rotate 90°"
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -434,10 +453,7 @@ function ProductDetails(props) {
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
                                 >
-                                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                                  <path d="M21 3v5h-5"></path>
-                                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                                  <path d="M8 16H3v5"></path>
+                                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
                                 </svg>
                               </button>
                             </div>
@@ -535,7 +551,7 @@ function ProductDetails(props) {
                           className="px-2.5 py-2 bg-[#F9C60A] cursor-pointer  rounded-full flex justify-center items-center"
                           onClick={handleDecreaseQty}
                         >
-                          <IoRemoveSharp className="text-white text-lg" />
+                          <IoRemoveSharp className="text-black text-lg" />
                         </div>
                         <p className="text-black md:text-xl text-lg font-medium text-center px-3  py-1">
                           {availableQty}
@@ -544,7 +560,7 @@ function ProductDetails(props) {
                           className="rounded-full bg-[#F9C60A] cursor-pointer px-2.5 py-2 flex justify-center items-center"
                           onClick={handleIncreaseQty}
                         >
-                          <IoAddSharp className=" text-white text-lg" />
+                          <IoAddSharp className=" text-black text-lg" />
                         </div>
                       </div>
                     </>
@@ -557,7 +573,7 @@ function ProductDetails(props) {
                       </button>
                     ) : (
                       <button
-                        className="bg-[#F9C60A] md:mt-20 px-4 py-2 w-[250px] rounded-[8px] text-white font-medium text-md  mt-4 cursor-pointer"
+                        className="bg-[#F9C60A] md:mt-20 px-4 py-2 w-[250px] rounded-[8px] text-black font-medium text-md  mt-4 cursor-pointer"
                         onClick={handleAddToCart}
                       >
                         {t("Add to Cart")}

@@ -95,8 +95,10 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
           toaster({ type: "success", message: "Item Added to Favorite" });
         }
       }
+      loader(false);
     } catch (err) {
       loader(false);
+      toaster({ type: "error", message: err?.message || "Something went wrong" });
     }
   };
 
@@ -157,15 +159,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
       </h3>
 
       {/* Price and Add to Cart */}
-      <div className="flex justify-between items-center gap-3">
+      <div className="flex justify-between items-center gap-1 w-full overflow-hidden">
         {/* Price */}
-        <div className="flex flex-col">
-          <p className="text-gray-800 md:text-xl text-[17px] font-bold">
+        <div className="flex flex-col flex-shrink min-w-0">
+          <p className="text-gray-800 md:text-xl text-[15px] font-bold whitespace-nowrap">
             {constant.currency}{" "}
             {Number(item?.price_slot[0]?.our_price || 0).toFixed(2)}
           </p>
           {item?.price_slot[0]?.other_price && (
-            <del className="text-[#F9C60A] text-sm font-medium">
+            <del className="text-[#F9C60A] md:text-sm text-xs font-medium whitespace-nowrap">
               {constant.currency}{" "}
               {Number(item?.price_slot[0]?.other_price || 0).toFixed(2)}
             </del>
@@ -176,15 +178,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
         {/* Add to Cart / Quantity Controls */}
         {item?.Quantity <= 0 ? (
           <button
-            className="bg-gray-400 text-white font-semibold px-4 py-2 rounded-full text-sm cursor-not-allowed flex items-center gap-2"
+            className="bg-gray-400 text-white font-semibold md:px-3 px-2 md:py-2 py-1.5 rounded-full text-[10px] md:text-xs cursor-not-allowed flex items-center gap-1 whitespace-nowrap flex-shrink-0"
             disabled
           >
             {t("Out of Stock")}
           </button>
         ) : itemQuantity > 0 ? (
-          <div className="bg-gray-100 rounded-full flex items-center px-2 py-1">
+          <div className="bg-gray-100 rounded-full flex items-center md:px-1.5 px-1 py-0.5 flex-shrink-0 min-w-0">
             <div
-              className="bg-[#F9C60A] cursor-pointer rounded-full w-7 h-7 flex justify-center items-center hover:bg-opacity-90 transition-colors"
+              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-6 md:h-6 w-5 h-5 flex justify-center items-center hover:bg-opacity-90 transition-colors flex-shrink-0"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -209,15 +211,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
                 );
               }}
             >
-              <IoRemoveSharp className="text-black w-5 h-5" />
+              <IoRemoveSharp className="text-black md:w-4 md:h-4 w-3 h-3" />
             </div>
 
-            <p className="text-black text-lg font-semibold md:mx-4 mx-2 min-w-[10px] text-center">
+            <p className="text-black md:text-base text-sm font-semibold md:mx-2 mx-1 min-w-[15px] text-center">
               {itemQuantity}
             </p>
 
             <div
-              className="bg-[#F9C60A] cursor-pointer rounded-full w-7 h-7 flex justify-center items-center hover:bg-opacity-90 transition-colors"
+              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-6 md:h-6 w-5 h-5 flex justify-center items-center hover:bg-opacity-90 transition-colors flex-shrink-0"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -245,16 +247,16 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
                 );
               }}
             >
-              <IoAddSharp className="text-black w-5 h-5" />
+              <IoAddSharp className="text-black md:w-4 md:h-4 w-3 h-3" />
             </div>
           </div>
         ) : (
           <button
-            className="bg-[#F9C60A] text-black font-semibold px-4 py-2 rounded-full text-sm cursor-pointer flex items-center gap-2 hover:bg-opacity-90 transition-colors"
+            className="bg-[#F9C60A] text-black font-semibold md:px-3 px-2 md:py-2 py-1.5 rounded-full text-[10px] md:text-xs cursor-pointer flex items-center gap-1 hover:bg-opacity-90 transition-colors whitespace-nowrap flex-shrink-0"
             onClick={handleAddToCart}
           >
             {t("Add")}
-            <FiShoppingCart className="w-5 h-5 text-black" />
+            <FiShoppingCart className="md:w-4 md:h-4 w-3 h-3 text-black" />
           </button>
         )}
       </div>
