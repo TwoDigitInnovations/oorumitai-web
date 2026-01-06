@@ -800,11 +800,11 @@ function Mybooking(props) {
                         className="-mt-2 md:w-[300px] w-[200px] h-[110px]"
                       />
                     </div>
-                    <div className="bg-gray-50 px-6 py-3 rounded-lg border border-gray-200 h-20">
-                      <p className=" mt-2 text-sm text-gray-500">
+                    <div className="bg-gray-50 px-3 md:px-6 py-3 rounded-lg border border-gray-200 min-h-[80px] flex flex-col justify-center">
+                      <p className="text-sm text-gray-500 whitespace-nowrap">
                         {t("Total")}
                       </p>
-                      <p className="text-xl font-semibold text-gray-800">
+                      <p className="text-lg md:text-xl font-semibold text-gray-800 whitespace-nowrap">
                         $ {booking.total || "0.00"}
                       </p>
                     </div>

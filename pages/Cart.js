@@ -43,6 +43,7 @@ function Cart(props) {
   const [orderId, setOrderID] = useState("");
   const [successPopup, setSuccessPopup] = useState(false);
   const [shipcCost, setShipCost] = useState({})
+  const [paymentMethod, setPaymentMethod] = useState("phonepe"); 
   
   // Guest user state
   const [isGuest, setIsGuest] = useState(false);
@@ -657,8 +658,16 @@ function Cart(props) {
         const data = createRes.data.orders || [];
         console.log(data)
         setOrderID(data.orderId);
-        // Redirect to Stripe payment
-        createCheckoutSession(data.orderId);
+        
+      
+        createPhonePePayment(data.orderId);
+        
+       
+        // if (paymentMethod === "phonepe") {
+        //   createPhonePePayment(data.orderId);
+        // } else {
+        //   createCheckoutSession(data.orderId);
+        // }
       } else {
         props.loader && props.loader(false);
         props.toaster({ type: "error", message: "Order save failed" });
@@ -670,6 +679,8 @@ function Cart(props) {
     }
   };
 
+
+  /*
   const createCheckoutSession = async (ID) => {
     const checkoutData = JSON.parse(localStorage.getItem("checkoutData"));
     const cartDetails = JSON.parse(localStorage.getItem("addCartDetail"));
@@ -692,7 +703,7 @@ function Cart(props) {
     const metadata = {
       userId: user?._id,
       deliveryTip: deliveryTip.toString(),
-      deliveryCharge: deliveryCharge.toString(), // still passing to backend
+      deliveryCharge: deliveryCharge.toString(),
       hasDiscount: "true",
       discountAmount: checkoutData?.discount?.toString() || "0",
       discountCode: checkoutData?.discountCode || "",
@@ -726,7 +737,7 @@ function Cart(props) {
             display_name: "Standard Delivery",
             type: "fixed_amount",
             fixed_amount: {
-              amount: Math.round(deliveryCharge * 100), // deliveryCharge used here
+              amount: Math.round(deliveryCharge * 100),
               currency: "usd",
             },
           },
@@ -736,7 +747,6 @@ function Cart(props) {
       cancel_url: `${window.location.origin}/Cart?status=cancelled&orderId=${ID}`,
     };
 
-    // props.loader(true);
     try {
       props.loader(true);
       const res = await Api("post", "create-checkout-session", body, router);
@@ -763,7 +773,59 @@ function Cart(props) {
       });
     }
   };
+  */
+ 
 
+  const createPhonePePayment = async (ID) => {
+    try {
+      props.loader(true);
+      
+      const checkoutData = JSON.parse(localStorage.getItem("checkoutData"));
+      
+     
+      const phonePeData = {
+        orderID: ID,
+        amount: mainTotal,
+        userPhone: isGuest ? guestInfo.phone : (user?.phone || user?.number || localAddress?.phoneNumber),
+        userName: isGuest ? guestInfo.name : (user?.username || user?.name),
+        userEmail: isGuest ? guestInfo.email : user?.email,
+      };
+
+      console.log("Initiating PhonePe Payment:", phonePeData);
+
+      const res = await Api("post", "phonepe-initiate", phonePeData, router);
+      
+      console.log("PhonePe API Response:", res);
+      
+      props.loader(false);
+
+     
+      if (res && res.status && res.data && res.data.success && res.data.paymentUrl) {
+        console.log("PhonePe Payment URL received, redirecting...");
+        localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+        localStorage.setItem("phonePeTransactionId", res.data.merchantTransactionId);
+        
+      
+        window.location.href = res.data.paymentUrl;
+      } else {
+        console.error("PhonePe initiation failed:", res);
+        props.toaster({
+          type: "error",
+          message: res?.data?.message || res?.message || res?.error || "Failed to initiate PhonePe payment",
+        });
+      }
+    } catch (error) {
+      console.error("PhonePe Payment Error:", error);
+      props.loader(false);
+      props.toaster({
+        type: "error",
+        message: error?.response?.data?.message || error?.message || "Something went wrong with PhonePe payment",
+      });
+    }
+  };
+
+
+  /*
   useEffect(() => {
     if (!router.isReady) return;
     if (cancelDone) return;
@@ -831,6 +893,95 @@ function Cart(props) {
     router.isReady,
     router.query.orderId,
     router.query.session_id,
+    paymentChecked,
+  ]);
+  */
+  
+
+  // PhonePe Callback Handler
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (paymentChecked) return;
+    
+    const { phonepe_callback, orderId, merchantTransactionId, phonepe_cancel } = router.query;
+    
+    // Handle payment cancellation
+    if (phonepe_cancel === "true" && orderId) {
+      const cancelPhonePePayment = async () => {
+        setPaymentChecked(true);
+        props.loader(true);
+
+        try {
+          await Api("post", "phonepe-cancel", { orderID: orderId }, router);
+          props.toaster({ 
+            type: "error", 
+            message: "Payment was cancelled" 
+          });
+          // Clear the URL params
+          router.replace("/Cart", undefined, { shallow: true });
+        } catch (error) {
+          console.error("Cancel payment error:", error);
+        } finally {
+          props.loader(false);
+        }
+      };
+
+      cancelPhonePePayment();
+      return;
+    }
+    
+    // Handle payment success callback
+    if (phonepe_callback === "true" && orderId && merchantTransactionId) {
+      const checkPhonePePayment = async () => {
+        setPaymentChecked(true);
+        props.loader(true);
+
+        try {
+          const res = await Api(
+            "post",
+            "phonepe-status",
+            { merchantTransactionId, orderID: orderId },
+            router
+          );
+
+          if (res && res.success) {
+            localStorage.removeItem("addCartDetail");
+            localStorage.removeItem("checkoutData");
+            localStorage.removeItem("phonePeTransactionId");
+            setCartData([]);
+            setSuccessPopup(true);
+          } else {
+            // Payment failed - cancel the order
+            await Api("post", "phonepe-cancel", { orderID: orderId }, router);
+            props.toaster({ 
+              type: "error", 
+              message: res?.message || "Payment verification failed" 
+            });
+          }
+        } catch (error) {
+          // Payment verification error - cancel the order
+          try {
+            await Api("post", "phonepe-cancel", { orderID: orderId }, router);
+          } catch (cancelError) {
+            console.error("Cancel order error:", cancelError);
+          }
+          props.toaster({ 
+            type: "error", 
+            message: error?.message || "Payment verification failed" 
+          });
+        } finally {
+          props.loader(false);
+        }
+      };
+
+      checkPhonePePayment();
+    }
+  }, [
+    router.isReady,
+    router.query.phonepe_callback,
+    router.query.phonepe_cancel,
+    router.query.orderId,
+    router.query.merchantTransactionId,
     paymentChecked,
   ]);
 
@@ -1228,6 +1379,63 @@ function Cart(props) {
                       <p className="text-lg font-bold text-black">
                         {constant.currency} {mainTotal}
                       </p>
+                    </div>
+
+                   
+                    {/* 
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <p className="text-base font-semibold text-black mb-3">
+                        {t("Select Payment Method")}
+                      </p>
+                      <div className="space-y-2">
+                        <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                          style={{ borderColor: paymentMethod === "stripe" ? "#F9C60A" : "#e5e7eb" }}>
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="stripe"
+                            checked={paymentMethod === "stripe"}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            className="mr-3 w-4 h-4 text-[#F9C60A]"
+                          />
+                          <div className="flex items-center gap-2">
+                            <span className="text-black font-medium">{t("Credit/Debit Card")}</span>
+                            <span className="text-xs text-gray-500">(Stripe)</span>
+                          </div>
+                        </label>
+                        
+                        <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                          style={{ borderColor: paymentMethod === "phonepe" ? "#F9C60A" : "#e5e7eb" }}>
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="phonepe"
+                            checked={paymentMethod === "phonepe"}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            className="mr-3 w-4 h-4 text-[#F9C60A]"
+                          />
+                          <div className="flex items-center gap-2">
+                            <span className="text-black font-medium">{t("PhonePe")}</span>
+                            <span className="text-xs text-gray-500">(UPI, Cards, Wallets)</span>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    */}
+
+                    {/* PhonePe Payment Info */}
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <div className="flex items-center justify-between p-3 bg-purple-50 border-2 border-purple-200 rounded-lg">
+                        <div>
+                          <p className="text-base font-semibold text-black">
+                            {t("Payment via PhonePe")}
+                          </p>
+                          <p className="text-xs text-gray-600 mt-1">
+                            {t("UPI, Cards, Net Banking & Wallets")}
+                          </p>
+                        </div>
+                        <div className="text-2xl">💳</div>
+                      </div>
                     </div>
 
                     <div className="mt-4">

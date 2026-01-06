@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import constant from "@/services/constant";
 import Image from "next/image";
 
-const GroceryCatories = ({ item, i, url, loader, toaster }) => {
+const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) => {
   const router = useRouter();
   const { t } = useTranslation();
   const [cartData, setCartData] = useContext(cartContext);
@@ -65,7 +65,10 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
   };
 
   const isFavorite = Favorite.some(
-    (fav) => fav._id === item?._id || fav?.product?._id === item?._id
+    (fav) => {
+      const favId = fav?.product?._id || fav?._id;
+      return favId === item?._id;
+    }
   );
 
   const toggleFavorite = async () => {
@@ -79,20 +82,23 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
       const res = await Api("post", "addremovefavourite", data, router);
 
       if (res.status) {
-        if (isFavorite) {
-          // Remove
-          const updated = Favorite.filter(
-            (fav) => fav._id !== item._id && fav?.product?._id !== item._id
-          );
-          setFavorite(updated);
-          localStorage.setItem("Favorite", JSON.stringify(updated));
-          toaster({ type: "error", message: "Item Removed From Favorite" });
-        } else {
-          // Add
-          const updated = [...Favorite, item];
-          setFavorite(updated);
-          localStorage.setItem("Favorite", JSON.stringify(updated));
-          toaster({ type: "success", message: "Item Added to Favorite" });
+        // Fetch fresh favorites from backend to ensure consistency
+        const favRes = await Api("get", "getFavourite", null, router, { id: user._id });
+        
+        if (favRes.status && favRes.data) {
+          const favoriteProducts = favRes.data.map(fav => fav.product).filter(Boolean);
+          setFavorite(favoriteProducts);
+          localStorage.setItem("Favorite", JSON.stringify(favoriteProducts));
+          
+          if (isFavorite) {
+            toaster({ type: "error", message: "Item Removed From Favorite" });
+            // Refresh the favorites page if callback provided
+            if (onFavoriteChange) {
+              onFavoriteChange();
+            }
+          } else {
+            toaster({ type: "success", message: "Item Added to Favorite" });
+          }
         }
       }
       loader(false);
@@ -106,7 +112,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
     const stored = localStorage.getItem("Favorite");
     if (stored) {
       try {
-        setFavorite(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        // Remove duplicates based on _id
+        const unique = parsed.filter((item, index, self) =>
+          index === self.findIndex((t) => t._id === item._id)
+        );
+        setFavorite(unique);
+        if (unique.length !== parsed.length) {
+          localStorage.setItem("Favorite", JSON.stringify(unique));
+        }
       } catch {
         localStorage.removeItem("Favorite");
       }
@@ -159,9 +173,9 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
       </h3>
 
       {/* Price and Add to Cart */}
-      <div className="flex justify-between items-center gap-1 w-full overflow-hidden">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 w-full">
         {/* Price */}
-        <div className="flex flex-col flex-shrink min-w-0">
+        <div className="flex flex-col flex-shrink-0">
           <p className="text-gray-800 md:text-xl text-[15px] font-bold whitespace-nowrap">
             {constant.currency}{" "}
             {Number(item?.price_slot[0]?.our_price || 0).toFixed(2)}
@@ -178,7 +192,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
         {/* Add to Cart / Quantity Controls */}
         {item?.Quantity <= 0 ? (
           <button
-            className="bg-gray-400 text-white font-semibold md:px-3 px-2 md:py-2 py-1.5 rounded-full text-[10px] md:text-xs cursor-not-allowed flex items-center gap-1 whitespace-nowrap flex-shrink-0"
+            className="bg-gray-400 text-white font-semibold px-3 py-1.5 rounded-full text-[10px] md:text-xs cursor-not-allowed flex items-center justify-center gap-1 whitespace-nowrap w-full md:w-auto"
             disabled
           >
             {t("Out of Stock")}
@@ -252,7 +266,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster }) => {
           </div>
         ) : (
           <button
-            className="bg-[#F9C60A] text-black font-semibold md:px-3 px-2 md:py-2 py-1.5 rounded-full text-[10px] md:text-xs cursor-pointer flex items-center gap-1 hover:bg-opacity-90 transition-colors whitespace-nowrap flex-shrink-0"
+            className="bg-[#F9C60A] text-black font-semibold px-3 py-1.5 rounded-full text-[10px] md:text-xs cursor-pointer flex items-center justify-center gap-1 hover:bg-opacity-90 transition-colors whitespace-nowrap w-full md:w-auto"
             onClick={handleAddToCart}
           >
             {t("Add")}

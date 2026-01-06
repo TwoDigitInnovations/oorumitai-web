@@ -27,17 +27,17 @@ export default function AddressForm({
       ></div>
 
       {/* Popup Box */}
-      <div className="fixed inset-0 flex justify-center items-center z-[9999] p-4 pointer-events-none">
-        <div className="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-6 relative pointer-events-auto animate-fadeIn scale-100">
+      <div className="fixed inset-0 flex justify-center items-center z-[9999] p-4 pointer-events-none overflow-y-auto">
+        <div className="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-4 md:p-6 relative pointer-events-auto animate-fadeIn scale-100 my-8 max-h-[90vh] overflow-y-auto">
           {/* Close Button */}
           <X
-            className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-black"
+            className="absolute top-4 right-4 cursor-pointer text-gray-600 hover:text-black z-10"
             size={22}
             onClick={onclose}
           />
 
           {/* Title */}
-          <p className="text-xl font-semibold mb-4 text-gray-800">
+          <p className="text-lg md:text-xl font-semibold mb-4 text-gray-800 pr-8">
             {t("Shipping Information")}
           </p>
 
@@ -83,7 +83,7 @@ export default function AddressForm({
                 name="zipcode"
                 value={profileData.zipcode || ""}
                 onChange={handleInputChange}
-                className="border rounded-lg py-2 px-3 text-sm w-full md:w-[420px] text-black"
+                className="border rounded-lg py-2 px-3 text-sm w-full md:w-[calc(100%-12px)] text-black"
               >
                 <option value="">{t("Select Zipcode")}</option>
                 {pincodes.map((z, idx) => (
@@ -93,13 +93,15 @@ export default function AddressForm({
                 ))}
               </select>
             )}
-            <AddressInput
-              setProfileData={setProfileData}
-              profileData={profileData}
-              value={profileData.address}
-              className="border rounded-lg py-2 px-3 text-sm w-[310px] md:w-[610px] text-black"
-              required
-            />
+            <div className="w-full">
+              <AddressInput
+                setProfileData={setProfileData}
+                profileData={profileData}
+                value={profileData.address}
+                className="border rounded-lg py-2 px-3 text-sm w-full text-black"
+                required
+              />
+            </div>
 
             <input
               type="text"

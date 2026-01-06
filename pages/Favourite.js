@@ -21,7 +21,7 @@ function Favourite(props) {
     if (token && user?._id) {
       getFavourite();
     }
-  }, [user]);
+  }, [user?._id]);
 
   const getFavourite = async () => {
     if (!user?._id) {
@@ -33,7 +33,15 @@ function Favourite(props) {
     Api("get", "getFavourite", null, router, { id: user._id }).then(
       (res) => {
         props.loader(false);
-        setFavouriteList(res.data);
+        if (res.status && res.data) {
+          // Filter out any favorites with null/undefined products
+          const validFavorites = res.data.filter(fav => fav.product && fav.product._id);
+          setFavouriteList(validFavorites);
+          
+          // Update global favorite context to keep it in sync
+          const favoriteProducts = validFavorites.map(fav => fav.product).filter(Boolean);
+          localStorage.setItem("Favorite", JSON.stringify(favoriteProducts));
+        }
       },
       (err) => {
         props.loader(false);
@@ -80,13 +88,14 @@ function Favourite(props) {
         <div className="grid xl:grid-cols-4 lg:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
           {favouriteList.length > 0 ? (
             favouriteList.map((item, i) => (
-              <div key={i} className="w-full">
+              <div key={item?._id || i} className="w-full">
                 <GroceryCategories
                   item={item?.product}
                   loader={props.loader}
                   toaster={props.toaster}
                   i={i}
                   url={`/product-details/${item?.product?.slug}`}
+                  onFavoriteChange={getFavourite}
                 />
               </div>
             ))
