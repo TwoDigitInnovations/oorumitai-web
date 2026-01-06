@@ -259,8 +259,11 @@ function Categories(props) {
                       className="min-w-[220px] border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-gray-800 cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-custom-green/50"
                       value={selectedCategories}
                       onChange={(e) => {
-                        router.replace(`/categories/${e.target.value}`);
-                        setSelectedCategories(e.target.value);
+                        const value = e.target.value;
+                        if (value) {
+                          router.replace(`/categories/${value}`);
+                          setSelectedCategories(value);
+                        }
                       }}
                     >
                       <option value="">{t("Select")}</option>
@@ -313,8 +316,11 @@ function Categories(props) {
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-gray-800"
                       value={selectedCategories}
                       onChange={(e) => {
-                        router.replace(`/categories/${e.target.value}`);
-                        setSelectedCategories(e.target.value);
+                        const value = e.target.value;
+                        if (value) {
+                          router.replace(`/categories/${value}`);
+                          setSelectedCategories(value);
+                        }
                       }}
                     >
                       <option value="">{t("Select")}</option>

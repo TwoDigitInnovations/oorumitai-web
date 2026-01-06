@@ -47,6 +47,13 @@ function ProductDetails(props) {
   const [rotation, setRotation] = useState(0);
   console.log(props)
 
+  // Stop loader when component mounts (data already loaded via props)
+  useEffect(() => {
+    if (props.loader) {
+      props.loader(false);
+    }
+  }, []);
+
   // useEffect(() => {
   //   if (router?.query?.id) {
   //     getProductById();

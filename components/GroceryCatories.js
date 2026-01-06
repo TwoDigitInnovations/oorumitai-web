@@ -131,6 +131,11 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
   const cartItem = cartData.find((cartItem) => cartItem._id === item._id);
   const itemQuantity = cartItem ? cartItem.qty : 0;
 
+  const handleProductClick = () => {
+    if (loader) loader(true);  // Show global loader
+    router.push(url);
+  };
+
   return (
     <div
       key={i}
@@ -158,15 +163,18 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
         <Image
           src={item.varients[0].image[0]}
           alt={item?.imageAltName || "Product Image"}
-          className="object-contain cursor-pointer"
-          onClick={() => router.push(url)}
+          className="object-contain cursor-pointer hover:scale-105 transition-transform duration-200"
+          onClick={handleProductClick}
           fill
           priority
         />
       </div>
 
       {/* Product Name */}
-      <h3 className="text-black md:text-md text-sm font-semibold mb-3 min-h-[40px] line-clamp-2">
+      <h3 
+        className="text-black md:text-md text-sm font-semibold mb-3 min-h-[40px] line-clamp-2 cursor-pointer hover:text-custom-green transition-colors"
+        onClick={handleProductClick}
+      >
         {lang === "en"
           ? item.name
           : item.vietnamiesName || item.name}
