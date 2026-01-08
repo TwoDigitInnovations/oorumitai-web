@@ -38,8 +38,19 @@ function App({ Component, pageProps }) {
     const cart = localStorage.getItem("addCartDetail");
     if (cart) setCartData(JSON.parse(cart));
 
-    const favorites = localStorage.getItem("favoriteProducts");
-    if (favorites) setFavorite(JSON.parse(favorites));
+    const favorites = localStorage.getItem("Favorite");
+    if (favorites) {
+      try {
+        const parsed = JSON.parse(favorites);
+        // Remove duplicates based on _id
+        const unique = parsed.filter((item, index, self) =>
+          index === self.findIndex((t) => t._id === item._id)
+        );
+        setFavorite(unique);
+      } catch {
+        setFavorite([]);
+      }
+    }
 
     const storedLang = localStorage.getItem("LANGUAGE");
     if (storedLang) setLang(storedLang);

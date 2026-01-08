@@ -353,11 +353,30 @@ const Navbar = (props) => {
       setUser(JSON.parse(userDetails));
       getProfileData();
     }
+    
+    // Load favorites from localStorage on mount
+    const storedFavorites = localStorage.getItem("Favorite");
+    if (storedFavorites) {
+      try {
+        const parsed = JSON.parse(storedFavorites);
+        // Remove duplicates based on _id
+        const unique = parsed.filter((item, index, self) =>
+          index === self.findIndex((t) => t._id === item._id)
+        );
+        setFavorite(unique);
+      } catch {
+        setFavorite([]);
+      }
+    }
+  }, []);
+
+  // Fetch favorites from backend when user is available
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token || hasFetchedFavourite) return;
+    if (!token || !user?._id || hasFetchedFavourite.current) return;
     hasFetchedFavourite.current = true;
     getProductById();
-  }, []);
+  }, [user?._id]);
 
   const getProfileData = () => {
     const token = localStorage.getItem("token");
@@ -716,14 +735,20 @@ const Navbar = (props) => {
   }
 
   const getProductById = async () => {
-    Api("get", "getFavourite", null, router, { id: user._id }).then(
-      (res) => {
-        setProductsId(res.data);
-      },
-      (err) => {
-        console.log(err);
+    try {
+      const res = await Api("get", "getFavourite", null, router, { id: user._id });
+      if (res?.data) {
+        const favoriteProducts = res.data.map(fav => fav.product).filter(Boolean);
+        // Remove duplicates
+        const unique = favoriteProducts.filter((item, index, self) =>
+          index === self.findIndex((t) => t._id === item._id)
+        );
+        setFavorite(unique);
+        localStorage.setItem("Favorite", JSON.stringify(unique));
       }
-    );
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+    }
   };
 
   const handleSearchSubmit = (e) => {

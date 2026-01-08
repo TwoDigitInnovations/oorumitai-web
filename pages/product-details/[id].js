@@ -41,7 +41,6 @@ function ProductDetails(props) {
   const [priceIndex, setPriceIndex] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState(props?.product?.price_slot[0]);
   const [Favorite, setFavorite] = useContext(favoriteProductContext);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isInCart, setIsInCart] = React.useState(false);
   const [availableQty, setAvailableQty] = React.useState(0);
   const [rotation, setRotation] = useState(0);
@@ -275,9 +274,9 @@ function ProductDetails(props) {
     );
   };
 
-  const addremovefavourite = () => {
+  const addremovefavourite = async () => {
     if (!user?.token) {
-      props.toaster({ type: "success", message: "Login required" });
+      props.toaster({ type: "error", message: "Login required" });
       return;
     }
 
@@ -286,51 +285,54 @@ function ProductDetails(props) {
     };
 
     props.loader(true);
-    Api("post", "addremovefavourite", data, router).then(
-      (res) => {
-        props.loader(false);
-        if (res.status) {
+    try {
+      const res = await Api("post", "addremovefavourite", data, router);
+      
+      if (res.status) {
+        // Fetch fresh favorites from backend to ensure consistency
+        const favRes = await Api("get", "getFavourite", null, router, { id: user._id });
+        
+        if (favRes.status && favRes.data) {
+          const favoriteProducts = favRes.data.map(fav => fav.product).filter(Boolean);
+          setFavorite(favoriteProducts);
+          localStorage.setItem("Favorite", JSON.stringify(favoriteProducts));
+          
+          // Update the current product's favorite status
+          setProductsId(prev => ({
+            ...prev,
+            favourite: !prev.favourite
+          }));
+          
           if (isFavorite) {
-            props.toaster({ type: "success", message: res.data?.message });
-            setFavorite((prevFavorites) => {
-              const updatedFavorites = prevFavorites.filter(
-                (fav) => fav._id !== productsId._id
-              );
-              localStorage.setItem(
-                "favorites",
-                JSON.stringify(updatedFavorites)
-              ); // Save to local storage
-              return updatedFavorites;
-            });
+            props.toaster({ type: "error", message: "Item Removed From Favorite" });
           } else {
-            setFavorite((prevFavorites) => {
-              const updatedFavorites = [...prevFavorites, productsId];
-              localStorage.setItem(
-                "favorites",
-                JSON.stringify(updatedFavorites)
-              ); // Save to local storage
-              return updatedFavorites;
-            });
+            props.toaster({ type: "success", message: "Item Added to Favorite" });
           }
-          getProductById();
-        } else {
-          props.toaster({ type: "error", message: res.data?.message });
         }
-      },
-      (err) => {
-        props.loader(false);
-        props.toaster({ type: "error", message: err?.message });
+      } else {
+        props.toaster({ type: "error", message: res.data?.message });
       }
-    );
+      props.loader(false);
+    } catch (err) {
+      props.loader(false);
+      props.toaster({ type: "error", message: err?.message });
+    }
   };
 
+  // Check if current product is in favorites
+  const isFavorite = Favorite.some(fav => fav._id === productsId?._id) || productsId?.favourite;
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    if (storedFavorites) {
-      setFavorite(JSON.parse(storedFavorites));
+    if (productsId?._id && Favorite.length > 0) {
+      const isInFavorites = Favorite.some(fav => fav._id === productsId._id);
+      if (isInFavorites !== productsId.favourite) {
+        setProductsId(prev => ({
+          ...prev,
+          favourite: isInFavorites
+        }));
+      }
     }
-  }, []);
+  }, [Favorite, productsId?._id]);
 
   const cartItem = productsId._id;
   const itemQuantity = cartItem ? cartItem.qty : 0;
@@ -482,11 +484,10 @@ function ProductDetails(props) {
                       className="p-2 border-[3px] border-black rounded-full flex justify-center items-center cursor-pointer"
                       onClick={addremovefavourite}
                     >
-                      {!productsId?.favourite && (
-                        <FaRegHeart className="text-black w-[23px] h-[23px]" />
-                      )}
-                      {productsId?.favourite && (
+                      {isFavorite ? (
                         <FaHeart className="text-red-700 w-[23px] h-[23px]" />
+                      ) : (
+                        <FaRegHeart className="text-black w-[23px] h-[23px]" />
                       )}
                     </div>
                   </div>

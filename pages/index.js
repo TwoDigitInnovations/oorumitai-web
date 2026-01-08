@@ -18,25 +18,29 @@ export default function Home(props) {
   const { t } = useTranslation();
   const [user] = useContext(userContext);
   const router = useRouter();
-  const [setFavorite] = useContext(favoriteProductContext);
+  const [Favorite, setFavorite] = useContext(favoriteProductContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) return;
+    if (!token || !user?._id) return;
     fetchFavorite();
-  }, []);
+  }, [user?._id]);
 
   const fetchFavorite = async () => {
-    // props.loader(true);
     try {
       const res = await Api("get", "getFavourite", null, router, {
         id: user._id,
       });
       const favs = Array.isArray(res?.data) ? res.data : [];
-      setFavorite(favs);
-      localStorage.setItem("Favorite", JSON.stringify(favs));
+      // Extract products from favorites and remove duplicates
+      const favoriteProducts = favs.map(fav => fav.product).filter(Boolean);
+      const uniqueFavorites = favoriteProducts.filter((item, index, self) =>
+        index === self.findIndex((t) => t._id === item._id)
+      );
+      setFavorite(uniqueFavorites);
+      localStorage.setItem("Favorite", JSON.stringify(uniqueFavorites));
     } catch (err) {
-      props.loader(false);
+      console.error("Error fetching favorites:", err);
     }
   };
 

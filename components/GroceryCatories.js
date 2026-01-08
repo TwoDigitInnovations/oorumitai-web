@@ -206,7 +206,7 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
             {t("Out of Stock")}
           </button>
         ) : itemQuantity > 0 ? (
-          <div className="bg-gray-100 rounded-full flex items-center md:px-1.5 px-1 py-0.5 flex-shrink-0 min-w-0">
+          <div className="rounded-full flex items-center md:px-1 px-0.5 py-0.5 flex-shrink-0 w-fit">
             <div
               className="bg-[#F9C60A] cursor-pointer rounded-full md:w-6 md:h-6 w-5 h-5 flex justify-center items-center hover:bg-opacity-90 transition-colors flex-shrink-0"
               onClick={() => {
