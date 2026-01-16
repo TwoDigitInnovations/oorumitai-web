@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev ",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "pm2 start npm --name 'oorumitai-web' -- start",
+    "restart": "pm2 restart oorumitai-web",
+    "logs": "pm2 logs oorumitai-web",
+    "lint": "next lint",
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
