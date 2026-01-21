@@ -97,7 +97,7 @@ const AboutUs = (props) => {
       <div className="max-w-7xl mx-auto px-4 ">
 
 
-        <div className="bg-[#FFEBAE] rounded-3xl  my-28 relative">
+        <div className="bg-[#FFEBAE] rounded-3xl my-28 relative">
           <div className="flex flex-col lg:flex-row ">
             <div className="max-w-2xl p-8 lg:p-12 flex flex-col justify-center min-h-[450px]">
               <h1 className="text-[24px] md:text-[28px]  font-bold text-gray-900 mb-4 leading-tight">
@@ -119,14 +119,17 @@ const AboutUs = (props) => {
               </div>
             </div>
           </div>
-          <div className="absolute -top-13 right-10 lg:w-[550px] md:flex hidden">
-            <div className="relative w-full h-[420px] lg:h-[550px]">
-              <Image
-                fill
-                src="/store5.jpg"
-                alt="bach hoa houston"
-                className="object-cover rounded-2xl"
-              />
+          <div className="absolute top-8 bottom-8 right-10 lg:w-[500px] md:flex hidden items-center">
+            <div className="bg-[#F9C60A99] p-6  w-full overflow-visible">
+              <div className="relative w-full h-[400px]">
+                <Image
+                  fill
+                  src="/man.png"
+                  alt="bach hoa houston"
+                  className="object-contain scale-115 -translate-y-3"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -152,22 +155,26 @@ const AboutUs = (props) => {
           </div>
 
           {/* Feature Cards */}
-          <div className="grid md:grid-cols-3 gap-6 md:mt-20 mt-10 mb-16 ">
-            {features.map((feature, index) => (
-              <div key={index} className="group">
-                <div className="bg-[#FFEBAE] rounded-2xl min-h-[280px] p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center text-center">
-                  <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="text-gray-900" size={48} />
+          <div className="bg-[#F9C60A] -mx-4 px-4 py-12 md:mt-20 mt-10 mb-16 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-6">
+                {features.map((feature, index) => (
+                  <div key={index} className="group">
+                    <div className="bg-[#FFEBAE] rounded-2xl min-h-[280px] p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center text-center">
+                      <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <feature.icon className="text-gray-900" size={48} />
+                      </div>
+                      <h3 className="text-[18px] font-bold text-gray-900 mb-3">
+                        {t(feature.title)}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-[13px]">
+                        {t(feature.description)}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-[18px] font-bold text-gray-900 mb-3">
-                    {t(feature.title)}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-[13px]">
-                    {t(feature.description)}
-                  </p>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
 
 
@@ -193,14 +200,17 @@ const AboutUs = (props) => {
                 </div>
               </div>
             </div>
-            <div className="absolute -top-10 right-10 lg:w-[500px] md:flex hidden">
-              <div className="relative w-full h-[400px] lg:h-[400px]">
-                <Image
-                  fill
-                  src="/Rectangle25.png"
-                  alt="bach hoa houston"
-                  className="object-cover rounded-2xl"
-                />
+            <div className="absolute top-8 bottom-8 right-10 lg:w-[500px] md:flex hidden items-center">
+              <div className="bg-[#F9C60A99]  w-full overflow-visible">
+                <div className="relative w-full h-[320px]">
+                  <Image
+                    fill
+                    src="/foods.png"
+                    alt="bach hoa houston"
+                    className="object-contain scale-115 -translate-y-3"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>

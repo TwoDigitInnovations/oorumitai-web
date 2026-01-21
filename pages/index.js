@@ -54,16 +54,33 @@ export default function Home(props) {
         />
         <link rel="canonical" href="https://www.oorukdai.com/" />
       </Head>
-      <div className="mx-auto md:max-w-7xl mt-7">
 
+      {/* Yellow Stripe with hline pattern - Only for Home Page Hero Section */}
+      <div className="absolute top-0 right-0 w-[27%] h-[800px] bg-[#F9C60A] z-[5] pointer-events-none hidden md:block">
+        <div className="absolute inset-0 opacity-40 mix-blend-multiply">
+          {/* <img
+            src="/hline.png"#F9C60A
+            alt="Pattern"
+            className="w-full h-full object-cover"
+          /> */}
+        </div>
+      </div>
+
+      {/* Main Header - Constrained Width */}
+      <div className="mx-auto md:max-w-7xl mt-7 relative z-10">
         <Suspense fallback={<div>Loading.....</div>}>
           <MainHeader />
         </Suspense>
-        <div className="md:flex hidden">
-          <Suspense fallback={<div>Loading.....</div>}>
-            <ShopByCategory loader={props.loader} toaster={props.toaster} />
-          </Suspense>
-        </div>
+      </div>
+
+      {/* Shop By Category - Full Width Section */}
+      <div className="md:flex hidden">
+        <Suspense fallback={<div>Loading.....</div>}>
+          <ShopByCategory loader={props.loader} toaster={props.toaster} />
+        </Suspense>
+      </div>
+
+      <div className="mx-auto md:max-w-7xl relative z-10">
         <Suspense fallback={<div>Loading.....</div>}>
           <SellProduct loader={props.loader} toaster={props.toaster} />
         </Suspense>

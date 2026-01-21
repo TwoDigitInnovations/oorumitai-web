@@ -62,7 +62,19 @@ function AnnouncementBar({ announcementBar, setAnnouncementBar, loader, toaster 
         className={`transition-all duration-500 ease-in-out ${announcementBar ? "opacity-100 max-h-12" : "opacity-0 max-h-0 overflow-hidden"
           }`}
       >
-        <div className="relative w-full h-12 overflow-hidden flex justify-center items-center bg-[#F9C60A] text-black">
+        <div className="relative overflow-hidden">
+          {/* Yellow Stripe with hline pattern - Background for AnnouncementBar */}
+          <div className="absolute top-0 right-0 w-[27%] h-full bg-[#F9C60A] z-[1] pointer-events-none hidden md:block">
+            <div className="absolute inset-0 opacity-40 mix-blend-multiply">
+              {/* <img
+                src="/hline.png"
+                alt="Pattern"
+                className="w-full h-full object-cover"
+              /> */}
+            </div>
+          </div>
+
+          <div className="relative w-full h-12 overflow-hidden flex justify-center items-center bg-transparent text-black z-10"></div>
           <div
             className="absolute whitespace-nowrap animate-marquee-mobile left-8 md:left-[30%]"
           >

@@ -40,87 +40,79 @@ const LeftLayout = (props) => {
     };
 
     return (
-
-        <div className="bg-white p-3 shadow-md w-full hidden md:flex">
-            <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
-
-                <div className="flex flex-1 justify-center ps-52">
-                    <div className="flex items-center w-full max-w-lg bg-gray-50 rounded-full px-4 py-2 border-2 relative">
-                        <Search size={20} className="text-gray-400" />
-                        <form onSubmit={handleSearchSubmit} className="flex-1">
-                            <input
-                                type="text"
-                                value={searchData}
-                                onChange={(e) => setSearchData(e.target.value)}
-                                placeholder={t("Search")}
-                                className="w-full bg-transparent text-black text-sm px-3 outline-none placeholder:text-gray-400"
-                            />
-                        </form>
-
-              
-                        {searchData && (
-                            <button
-                                type="button"
-                                onClick={() => setSearchData("")}
-                                className="absolute cursor-pointer right-3 text-gray-400 hover:text-gray-600 transition"
-                            >
-                                <X size={18} />
-                            </button>
-                        )}
+        <>
+            <div className="relative overflow-hidden">
+                {/* Yellow Stripe with hline pattern - Background for LeftLayout */}
+                <div className="absolute top-0 right-0 w-[27%] h-full bg-[#F9C60A] z-[1] pointer-events-none hidden md:block">
+                    <div className="absolute inset-0 opacity-40 mix-blend-multiply">
+                        {/* <img
+                            src="/hline.png"
+                            alt="Pattern"
+                            className="w-full h-full object-cover"
+                        /> */}
                     </div>
                 </div>
 
-              
-                <div className="flex items-center gap-3 pl-6">
-                    {/* Track Order Link */}
-                    {/* <div
-                        className="cursor-pointer flex items-center gap-2 hover:text-custom-green transition-colors"
-                        onClick={() => router.push("/track-order")}
-                    >
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            className="h-5 w-5 text-black" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke="currentColor"
-                        >
-                            <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth={2} 
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" 
-                            />
-                        </svg>
-                        <span className="text-black font-medium">{t("Track Order")}</span>
-                    </div> */}
+                <div className="bg-transparent p-3 shadow-md w-full relative z-10 hidden md:block">
+                    <div className="flex items-center justify-center w-full mx-auto px-4 gap-8">
+                        {/* Centered Search Box */}
+                        <div className="flex justify-center flex-1">
+                            <div className="flex items-center w-full max-w-lg bg-white rounded-full px-4 py-2 border-2 border-gray-300 relative shadow-sm">
+                                <Search size={20} className="text-gray-400" />
+                                <form onSubmit={handleSearchSubmit} className="flex-1">
+                                    <input
+                                        type="text"
+                                        value={searchData}
+                                        onChange={(e) => setSearchData(e.target.value)}
+                                        placeholder={t("Search")}
+                                        className="w-full bg-transparent text-black text-sm px-3 outline-none placeholder:text-gray-400"
+                                    />
+                                </form>
 
-                    <span className="text-md text-gray-600"> {t("Select Language")}:</span>
-                    <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
-                        <button
-                            onClick={() => handleClick("en")}
-                            className={`px-3 py-2 cursor-pointer text-[14px] transition ${lang === "en"
-                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
-                                    : "text-black font-semibold"
-                                }`}
-                        >
-                            EN
-                        </button>
-                        <button
-                            onClick={() => handleClick("fr")}
-                            className={`px-3 py-2 text-[14px] cursor-pointer transition ${lang === "fr"
-                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
-                                    : "text-black font-semibold"
-                                }`}
-                        >
-                            FR
-                        </button>
+                                {searchData && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setSearchData("")}
+                                        className="absolute cursor-pointer right-3 text-gray-400 hover:text-gray-600 transition"
+                                    >
+                                        <X size={18} />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Select Language on Right */}
+                        <div className="flex items-center gap-3 flex-shrink-0 relative z-20">
+                            <div className="bg-[#F9C60A] px-4 py-2 relative z-20 whitespace-nowrap">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-md text-black font-semibold whitespace-nowrap">{t("Select Language")}:</span>
+                                    <div className="flex bg-gray-200 rounded-full overflow-hidden border border-gray-300 gap-2">
+                                        <button
+                                            onClick={() => handleClick("en")}
+                                            className={`px-3 py-2 cursor-pointer text-[14px] transition ${lang === "en"
+                                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
+                                                    : "text-black font-semibold"
+                                                }`}
+                                        >
+                                            EN
+                                        </button>
+                                        <button
+                                            onClick={() => handleClick("fr")}
+                                            className={`px-3 py-2 text-[14px] cursor-pointer transition ${lang === "fr"
+                                                    ? "bg-[#F9C60A] text-black font-bold rounded-full"
+                                                    : "text-black font-semibold"
+                                                }`}
+                                        >
+                                            FR
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-
-
+        </>
     );
 };
 

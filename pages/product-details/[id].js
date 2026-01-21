@@ -373,7 +373,7 @@ function ProductDetails(props) {
 
           <div className="w-full ">
             <div className="grid md:grid-cols-2 grid-cols-1 w-full gap-5">
-              <div className="p-[10px] rounded-[15px] overflow-hidden">
+              <div className="p-[10px] rounded-[15px] overflow-hidden border border-gray-300">
                 <Carousel
                   className="h-full w-full"
                   responsive={responsive}
@@ -493,7 +493,7 @@ function ProductDetails(props) {
                   </div>
 
 
-                  <div className="pt-7 md:pt-20 w-full md:w-[400px] grid md:grid-cols-3 grid-cols-2 gap-5">
+                  <div className="pt-7 md:pt-20 w-full md:w-[500px] grid md:grid-cols-3 grid-cols-2 gap-5">
                     {priceSlot &&
                       priceSlot.map((data, i) => {
                         const otherprice = parseFloat(data?.other_price);
@@ -509,7 +509,7 @@ function ProductDetails(props) {
                                 setSelectedPrice(data);
                                 setPriceIndex(i);
                               }}
-                              className={`cursor-pointer w-full rounded-[8px] border border-custom-darkPurple p-[10px] relative
+                              className={`cursor-pointer w-full rounded-[8px] border border-custom-darkPurple p-[14px] relative
                                         ${priceIndex == i
                                   ? "bg-[#FFEBAE]"
                                   : "bg-white"
@@ -522,9 +522,9 @@ function ProductDetails(props) {
                                     width={60}
                                     height={60}
                                     className="w-[70px] h-[60px] object-contain absolute -top-[20px] -right-[18px] "
-                                    src="/star.png"
+                                    src="/off.png"
                                   />
-                                  <p className="text-white text-center text-[9px] font-medium absolute -top-[2px] right-[2px]">
+                                  <p className="text-black text-center text-[9px] font-medium absolute -top-[2px] right-[2px]">
                                     {percentageDifference?.toFixed(2)}%<br />
                                     {t("off")}
                                   </p>

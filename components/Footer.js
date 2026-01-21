@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="py-10 bg-[#FFE27D] text-black font-sans rounded-tl-[50px] rounded-tr-[50px] "
+      className="py-10 bg-[#F9C60A] text-black font-sans rounded-tl-[50px] rounded-tr-[50px] "
       role="contentinfo"
       aria-label="Website Footer"
     >

@@ -47,24 +47,42 @@ function StoreLocation(props) {
           href="https://www.Oorumittai.com/StoreLocation"
         />
       </Head>
-      <div className="relative min-h-screen md:mt-10 mt-10">
-        <h1 className="text-black font-bold text-center text-[20px] md:text-[24px] p-2 bg-opacity-75 rounded lg:mt-3 ">
-          {t("Store Location")}
-        </h1>
-        <section className="bg-white w-full flex flex-col justify-center items-center">
-          <div className="max-w-7xl mx-auto w-full md:px-5 px-5 md:pt-10 md:pb-10 pb-5 md:min-h-screen">
-            {loading ? (
-              <p className="text-base text-black font-normal md:pb-5">
-                Loading...
-              </p>
-            ) : (
-              <div
-                className="md:text-[18px] text-[14px] text-black font-normal md:pb-5 store-content"
-                dangerouslySetInnerHTML={{ __html: StoreLocation }}
-              />
-            )}
+      <div className="min-h-screen md:mt-5 mt-14 md:mb-0 mb-10">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          {/* Main Card with Background Image */}
+          <div 
+            className="relative overflow-hidden rounded-3xl shadow-2xl"
+            style={{
+              backgroundImage: 'url(/bgstore.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'left center',
+              backgroundRepeat: 'no-repeat',
+              minHeight: '700px',
+              width: '100%'
+            }}
+          >
+            {/* Light blue overlay */}
+            <div className="absolute inset-0 bg-blue-100/20"></div>
+            
+            <div className="relative z-10 flex items-center justify-center md:justify-end p-8 md:p-12 lg:p-16 min-h-[600px]">
+
+              {/* Store Information - Direct on image without box */}
+              <div className="max-w-xl w-full">
+                {loading ? (
+                  <p className="text-xl text-gray-900 font-medium">Loading...</p>
+                ) : (
+                  <div className="space-y-4">
+                    <div
+                      className="text-base md:text-lg text-gray-900 leading-relaxed store-content"
+                      dangerouslySetInnerHTML={{ __html: StoreLocation }}
+                    />
+                  </div>
+                )}
+              </div>
+
+            </div>
           </div>
-        </section>
+        </div>
       </div>
     </>
 

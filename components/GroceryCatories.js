@@ -139,76 +139,77 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
   return (
     <div
       key={i}
-      className="bg-white w-full rounded-[12px] shadow-lg hover:shadow-xl transition-all duration-300 md:p-4 p-2.5 relative"
+      className="bg-[#F9C60A29] w-full rounded-[20px] shadow-md hover:shadow-lg transition-all duration-300 md:p-5 p-3 relative border border-[#F9C60A]/20"
     >
       {/* Category Badge */}
-      <div className="absolute top-3 left-3 bg-[#FFE27D] text-gray-800 text-xs font-medium px-3 py-1 rounded-full z-10">
+      <div className="absolute top-3 left-3 bg-[#F9C60A] text-black text-[10px] md:text-xs font-semibold px-3 py-1 rounded-full z-10 shadow-sm">
         {item.categoryName}
       </div>
 
-      {/* Favorite Button */}
-      <div
-        className="absolute top-6 right-6 border-[3px] border-black rounded-full bg-white md:w-11 md:h-11 h-9 w-9 flex justify-center items-center shadow-md cursor-pointer  z-10"
-        onClick={toggleFavorite}
-      >
-        {isFavorite ? (
-          <FaHeart className="text-red-600 md:w-6 md:h-6 h-5 w-5" />
-        ) : (
-          <FaRegHeart className="text-black md:w-6 md:h-6 h-5 w-5" />
-        )}
-      </div>
-
       {/* Product Image */}
-      <div className="relative w-full h-48 flex items-center justify-center mb-4 z-0">
+      <div className="relative w-full md:h-48 h-36 flex items-center justify-center mb-4 mt-6 z-0">
         <Image
           src={item.varients[0].image[0]}
           alt={item?.imageAltName || "Product Image"}
           className="object-contain cursor-pointer hover:scale-105 transition-transform duration-200"
           onClick={handleProductClick}
           fill
+          sizes="(max-width: 768px) 150px, 200px"
           priority
         />
       </div>
 
-      {/* Product Name */}
-      <h3 
-        className="text-black md:text-md text-sm font-semibold mb-3 min-h-[40px] line-clamp-2 cursor-pointer hover:text-custom-green transition-colors"
-        onClick={handleProductClick}
-      >
-        {lang === "en"
-          ? item.name
-          : item.vietnamiesName || item.name}
-      </h3>
-
-      {/* Price and Add to Cart */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 w-full">
-        {/* Price */}
-        <div className="flex flex-col flex-shrink-0">
-          <p className="text-gray-800 md:text-xl text-[15px] font-bold whitespace-nowrap">
-            {constant.currency}{" "}
-            {Number(item?.price_slot[0]?.our_price || 0).toFixed(2)}
-          </p>
-          {item?.price_slot[0]?.other_price && (
-            <del className="text-[#F9C60A] md:text-sm text-xs font-medium whitespace-nowrap">
-              {constant.currency}{" "}
-              {Number(item?.price_slot[0]?.other_price || 0).toFixed(2)}
-            </del>
+      {/* Product Name with Wishlist Icon */}
+      <div className="flex items-start justify-between gap-2">
+        <h3 
+          className="text-black md:text-base text-sm font-semibold min-h-[40px] line-clamp-2 cursor-pointer hover:text-custom-green transition-colors flex-1"
+          onClick={handleProductClick}
+        >
+          {lang === "en"
+            ? item.name
+            : item.vietnamiesName || item.name}
+        </h3>
+        
+        {/* Favorite Button - Next to Product Name */}
+        <div
+          className="border-2 border-black rounded-full bg-white md:w-8 md:h-8 h-7 w-7 flex justify-center items-center shadow-sm cursor-pointer hover:scale-110 transition-transform flex-shrink-0"
+          onClick={toggleFavorite}
+        >
+          {isFavorite ? (
+            <FaHeart className="text-red-600 md:w-4 md:h-4 h-3 w-3" />
+          ) : (
+            <FaRegHeart className="text-black md:w-4 md:h-4 h-3 w-3" />
           )}
         </div>
+      </div>
 
+      {/* Price */}
+      <div className="flex flex-col items-start mb-3">
+        <p className="text-black md:text-lg text-base font-bold">
+          {constant.currency}{" "}
+          {Number(item?.price_slot[0]?.our_price || 0).toFixed(2)}
+        </p>
+        {item?.price_slot[0]?.other_price && (
+          <del className="text-[#F9C60A] md:text-sm text-xs font-medium">
+            {constant.currency}{" "}
+            {Number(item?.price_slot[0]?.other_price || 0).toFixed(2)}
+          </del>
+        )}
+      </div>
 
-        {/* Add to Cart / Quantity Controls */}
+      {/* Add to Cart / Quantity Controls */}
+      <div className="w-full flex justify-center">
         {item?.Quantity <= 0 ? (
           <button
-            className="bg-gray-400 text-white font-semibold px-3 py-1.5 rounded-full text-[10px] md:text-xs cursor-not-allowed flex items-center justify-center gap-1 whitespace-nowrap w-full md:w-auto"
+            className="bg-gray-400 text-white font-semibold md:px-6 px-4 md:py-2 py-1.5 rounded-full md:text-sm text-xs cursor-not-allowed shadow-sm"
             disabled
           >
             {t("Out of Stock")}
           </button>
         ) : itemQuantity > 0 ? (
-          <div className="rounded-full flex items-center md:px-1 px-0.5 py-0.5 flex-shrink-0 w-fit">
+          <div className="bg-white rounded-full flex items-center justify-center px-2 py-1.5 border-2 border-[#F9C60A] shadow-sm">
             <div
-              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-6 md:h-6 w-5 h-5 flex justify-center items-center hover:bg-opacity-90 transition-colors flex-shrink-0"
+              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-7 md:h-7 w-6 h-6 flex justify-center items-center hover:bg-opacity-90 transition-colors"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -233,15 +234,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
                 );
               }}
             >
-              <IoRemoveSharp className="text-black md:w-4 md:h-4 w-3 h-3" />
+              <IoRemoveSharp className="text-black md:w-4 md:h-4 w-3.5 h-3.5" />
             </div>
 
-            <p className="text-black md:text-base text-sm font-semibold md:mx-2 mx-1 min-w-[15px] text-center">
+            <p className="text-black md:text-base text-sm font-bold mx-4 min-w-[20px] text-center">
               {itemQuantity}
             </p>
 
             <div
-              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-6 md:h-6 w-5 h-5 flex justify-center items-center hover:bg-opacity-90 transition-colors flex-shrink-0"
+              className="bg-[#F9C60A] cursor-pointer rounded-full md:w-7 md:h-7 w-6 h-6 flex justify-center items-center hover:bg-opacity-90 transition-colors"
               onClick={() => {
                 const updatedCart = cartData.map((cartItem) => {
                   if (cartItem._id === item._id) {
@@ -269,16 +270,15 @@ const GroceryCatories = ({ item, i, url, loader, toaster, onFavoriteChange }) =>
                 );
               }}
             >
-              <IoAddSharp className="text-black md:w-4 md:h-4 w-3 h-3" />
+              <IoAddSharp className="text-black md:w-4 md:h-4 w-3.5 h-3.5" />
             </div>
           </div>
         ) : (
           <button
-            className="bg-[#F9C60A] text-black font-semibold px-3 py-1.5 rounded-full text-[10px] md:text-xs cursor-pointer flex items-center justify-center gap-1 hover:bg-opacity-90 transition-colors whitespace-nowrap w-full md:w-auto"
+            className="bg-[#F9C60A] text-black font-bold md:px-8 px-6 md:py-2 py-1.5 rounded-full md:text-sm text-xs cursor-pointer hover:bg-opacity-90 transition-colors shadow-sm mx-auto block"
             onClick={handleAddToCart}
           >
-            {t("Add")}
-            <FiShoppingCart className="md:w-4 md:h-4 w-3 h-3 text-black" />
+            {t("Add To Cart")}
           </button>
         )}
       </div>

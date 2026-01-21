@@ -770,8 +770,20 @@ const Navbar = (props) => {
 
   return (
     <>
-      <header className="md:shadow-none shadow-md bg-[#F9C60A] w-full sticky top-0 z-100">
-        <div className="max-w-7xl mx-auto flex items-center md:justify-between justify-between md:gap-0 gap-2 px-4 py-1.5">
+      <div className="relative overflow-visible">
+        {/* Yellow Stripe with hline pattern - Background for Navbar */}
+        <div className="absolute top-0 right-0 w-[27%] h-full bg-[#F9C60A] z-[1] pointer-events-none hidden md:block">
+          <div className="absolute inset-0 opacity-40 mix-blend-multiply">
+            {/* <img
+              src="/hline.png"
+              alt="Pattern"
+              className="w-full h-full object-cover"
+            /> */}
+          </div>
+        </div>
+
+        <header className="md:shadow-none shadow-md bg-transparent w-full sticky top-0 z-100 relative">
+          <div className="max-w-7xl mx-auto flex items-center md:justify-between justify-between md:gap-0 gap-2 px-4 py-1.5 relative z-10">
 
           <div className="relative md:w-40 w-20 md:h-12 h-7 flex items-center flex-shrink-0 mr-2">
             <Image
@@ -788,15 +800,15 @@ const Navbar = (props) => {
             <HeaderFirst loader={props.loader} toaster={props.toaster} />
           </div>
 
-          <div className="hidden md:flex items-center md:space-x-8">
+          <div className="hidden md:flex items-center md:space-x-8 flex-shrink-0 md:ml-4 lg:ml-8 xl:ml-12">
 
             {!isLoggedIn ? (
               <div
-                className="flex items-center space-x-4 cursor-pointer"
+                className="flex items-center space-x-2 cursor-pointer whitespace-nowrap"
                 onClick={() => router.push("/signIn")}
               >
-                <CircleUserRound className="text-black" size={30} />
-                <span className="text-gray-800 font-medium">{t("Sign in")}</span>
+                <CircleUserRound className="text-black flex-shrink-0" size={30} />
+                <span className="text-gray-800 font-medium whitespace-nowrap">{t("Sign in")}</span>
               </div>
             ) : (
               <div
@@ -1770,7 +1782,7 @@ const Navbar = (props) => {
         </div>
       </Drawer>
 
-
+      </div>
     </>
   );
 };

@@ -71,8 +71,8 @@ const HeaderFirst = (props) => {
 
   return (
     <>
-      <nav className="bg-[#F9C60A]  relative">
-        <div className="mt-2 mx-auto px-4 py-2 md:flex hidden ">
+      <nav className="bg-white relative z-50">
+        <div className="mt-2 mx-auto px-4 py-2 md:flex hidden relative z-20">
           <div className="hidden flex-1 lg:flex justify-center lg:space-x-8">
             <p
               className={`text-[16px] font-medium transition-transform duration-300 hover:-translate-y-[5px]  cursor-pointer  ${selectedTab === "home"
@@ -109,39 +109,53 @@ const HeaderFirst = (props) => {
               />
 
               {dropdownOpen && (
-                <div className="absolute top-full left-0 mt-4 bg-custom-green shadow-lg rounded-xl w-[241px] overflow-hidden z-20 pt-3 pb-2">
+                <div className="absolute top-full left-0 mt-2 bg-[#F9C60A] shadow-xl rounded-xl w-[220px] overflow-hidden z-[9999] p-3">
                   {category.slice(0, 6).map((cat, index) => (
-                    <div key={index} className="flex flex-col justify-between">
-                      <div
-                        className="flex flex-row justify-between cursor-pointer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setDropdownOpen(false); // Close dropdown
-                          handleNavigation(
-                            `/categories/${cat?.slug}`,
-                            "category"
-                          );
-                        }}
-                      >
-                        <p className="px-4 py-1.5 text-black text-[16px]">
-                          {cat.name}
-                        </p>
-                        <IoIosArrowForward className="text-2xl mt-2 mr-1 text-black" />
+                    <div 
+                      key={index} 
+                      className="bg-white rounded-lg mb-2 last:mb-0 cursor-pointer hover:shadow-md transition-all duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDropdownOpen(false);
+                        handleNavigation(`/categories/${cat?.slug}`, "category");
+                      }}
+                    >
+                      <div className="flex items-center justify-between p-1.5">
+                        <div className="flex items-center gap-2">
+                          {cat.image && (
+                            <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                              <img
+                                src={cat.image}
+                                alt={cat.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                          <p className="text-black text-xs font-semibold">
+                            {cat.name}
+                          </p>
+                        </div>
+                        <IoIosArrowForward className="text-lg text-black flex-shrink-0" />
                       </div>
                     </div>
                   ))}
 
-                  <p
-                    className=" px-4 py-1.5 text-black text-[16px] cursor-pointer"
+                  <div 
+                    className="bg-white rounded-lg cursor-pointer hover:shadow-md transition-all duration-200"
                     onClick={(e) => {
                       e.preventDefault();
                       setDropdownOpen(false);
                       handleNavigation("/categories/all", "allCategories");
                     }}
                   >
-                    {t("See All Categories")}
-                  </p>
+                    <div className="flex items-center justify-between p-1.5">
+                      <p className="text-black text-xs font-semibold">
+                        {t("See All Categories")}
+                      </p>
+                      <IoIosArrowForward className="text-lg text-black flex-shrink-0" />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

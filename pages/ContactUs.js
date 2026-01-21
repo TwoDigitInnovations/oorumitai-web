@@ -137,64 +137,64 @@ const FeedbackForm = (props) => {
         />
       </Head>
 
-      <div className="min-h-[600px] md:mt-5 mt-14 md:mb-0 mb-10">
-        <div className="container mx-auto px-4 py-2 md:py-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
+      <div className="min-h-screen md:mt-5 mt-14 md:mb-0 mb-10">
+        <div className="container mx-auto px-14 py-8 md:py-12">
+          {/* Main Card with Background Image */}
+          <div 
+            className="relative  overflow-hidden shadow-2xl"
+            style={{
+              backgroundImage: 'url(/contactimage.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/20"></div>
+            
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0">
 
-            {/* Left Side - Content */}
-            <div className="flex flex-col justify-start">
-              <div className="mb-6">
-                <p className="text-gray-500 text-sm mb-2 font-poppins">
-                  <span 
-                    onClick={() => router.push("/")} 
-                    className="cursor-pointer hover:text-[#F9C60A] transition-colors"
-                  >
-                    Home
-                  </span>
-                  {" › "}{t("Contact Us")}
-                </p>
-                <h1 className="text-black font-poppins font-light text-[88px] leading-[116px] tracking-normal">
+              {/* Left Side - Content */}
+              <div className="flex flex-col justify-center backdrop-blur-xs bg-gray-200/30 p-8 md:p-12 lg:p-16 h-full">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gray-900">
                   {t("Get in-touch")}<br />{t("with us")}!
                 </h1>
-              </div>
 
-              <p className="text-gray-700 text-base mb-8 font-poppins">
-                {t("We're here to help! Whether you have a question about our services or need assistance with your account or want to provide feedback, our team is ready to assist you")}.
-              </p>
+                <p className="text-base md:text-lg mb-8 leading-relaxed text-gray-900">
+                  {t("We're here to help! Whether you have a question about our services or need assistance with your account or want to provide feedback, our team is ready to assist you")}.
+                </p>
 
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-700 font-medium mb-1">{t("Email")}:</p>
-                  <a
-                    href="mailto:contact@Oorumittai.com"
-                    className="text-black text-lg font-poppins hover:text-blue-600 transition"
-                  >
-                    contact@Oorumittai.com
-                  </a>
-                </div>
-
-                <div>
-                  <p className="text-gray-700 font-medium mb-1">{t("Phone No")}:</p>
-                  <a
-                    href="tel:1234567890"
-                    className="text-black text-lg hover:text-blue-600 transition"
-                  >
-                    1234567890
-                  </a>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Side - Form */}
-            <div className="flex items-start lg:items-center">
-              <form
-                className="bg-[#FFEBAE] p-6 md:p-8 rounded-3xl w-full"
-                onSubmit={submitFeedback}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="space-y-4">
                   <div>
-                    <label className="font-poppins text-black font-medium text-sm block mb-2">
+                    <p className="font-semibold mb-1 text-gray-900">{t("Email")}:</p>
+                    <a
+                      href="mailto:contact@Oorumittai.com"
+                      className="text-lg text-gray-900 hover:text-[#F9C60A] transition underline"
+                    >
+                      contact@Oorumittai.com
+                    </a>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold mb-1 text-gray-900">{t("Phone No")}:</p>
+                    <a
+                      href="tel:1234567890"
+                      className="text-lg text-gray-900 hover:text-[#F9C60A] transition underline"
+                    >
+                      1234567890
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side - Form */}
+              <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 h-full">
+                <form
+                  className="backdrop-blur-xs bg-gray-100/30 p-8 md:p-10 rounded-3xl w-full max-w-xl"
+                  onSubmit={submitFeedback}
+                >
+                  <div className="mb-5">
+                    <label className="font-semibold text-gray-900 text-base block mb-2">
                       {t("Full Name")}
                     </label>
                     <input
@@ -203,19 +203,41 @@ const FeedbackForm = (props) => {
                       value={formData.fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className={`w-full font-poppins px-4 py-3 text-gray-700 bg-white rounded-full outline-none ${errors.fullName ? "border-2 border-red-500" : "border-0"
-                        }`}
+                      className={`w-full px-5 py-3.5 text-gray-700 bg-[#FFFBEA] rounded-xl outline-none border-0 placeholder:text-gray-500 ${
+                        errors.fullName ? "ring-2 ring-red-500" : ""
+                      }`}
                       placeholder={t("Enter your name")}
                       required
                     />
                     {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                      <p className="text-red-600 text-xs mt-1 font-medium">{errors.fullName}</p>
                     )}
                   </div>
 
-                  <div>
-                    <label className="font-poppins text-black font-medium text-sm block mb-2">
-                      {t("Phone No")}
+                  <div className="mb-5">
+                    <label className="font-semibold text-gray-900 text-base block mb-2">
+                      {t("Email")}
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`w-full px-5 py-3.5 text-gray-700 bg-[#FFFBEA] rounded-xl outline-none border-0 placeholder:text-gray-500 ${
+                        errors.email ? "ring-2 ring-red-500" : ""
+                      }`}
+                      placeholder={t("Enter your email name")}
+                      required
+                    />
+                    {errors.email && (
+                      <p className="text-red-600 text-xs mt-1 font-medium">{errors.email}</p>
+                    )}
+                  </div>
+
+                  <div className="mb-5">
+                    <label className="font-semibold text-gray-900 text-base block mb-2">
+                      {t("Phone Number")}
                     </label>
                     <input
                       type="tel"
@@ -224,68 +246,50 @@ const FeedbackForm = (props) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       maxLength={10}
-                      className={`w-full px-4 font-poppins py-3 text-gray-700 bg-white rounded-full outline-none ${errors.phoneNumber ? "border-2 border-red-500" : "border-0"
-                        }`}
-                      placeholder={t("Enter your phone number")}
+                      className={`w-full px-5 py-3.5 text-gray-700 bg-[#FFFBEA] rounded-xl outline-none border-0 placeholder:text-gray-500 ${
+                        errors.phoneNumber ? "ring-2 ring-red-500" : ""
+                      }`}
+                      placeholder={t("Enter your Phone no")}
                       required
                     />
                     {errors.phoneNumber && (
-                      <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>
+                      <p className="text-red-600 text-xs mt-1 font-medium">{errors.phoneNumber}</p>
                     )}
                   </div>
-                </div>
 
-                <div className="mb-4">
-                  <label className="text-black font-medium text-sm block mb-2">
-                    {t("Email")}
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`w-full px-4 py-3 text-gray-700 bg-white rounded-full outline-none ${errors.email ? "border-2 border-red-500" : "border-0"
+                  <div className="mb-6">
+                    <label className="font-semibold text-gray-900 text-base block mb-2">
+                      {t("Message")}
+                    </label>
+                    <textarea
+                      name="query"
+                      rows="5"
+                      value={formData.query}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`w-full px-5 py-3.5 text-gray-700 bg-[#FFFBEA] rounded-xl outline-none resize-none border-0 placeholder:text-gray-500 ${
+                        errors.query ? "ring-2 ring-red-500" : ""
                       }`}
-                    placeholder={t("Enter your email")}
-                    required
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                  )}
-                </div>
+                      placeholder={t("Enter your Message")}
+                      required
+                    ></textarea>
+                    {errors.query && (
+                      <p className="text-red-600 text-xs mt-1 font-medium">{errors.query}</p>
+                    )}
+                  </div>
 
-                <div className="mb-6">
-                  <label className="text-black font-medium text-sm block mb-2">
-                    {t("Message")}
-                  </label>
-                  <textarea
-                    name="query"
-                    rows="4"
-                    value={formData.query}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`w-full px-4 py-3 text-gray-700 bg-white rounded-3xl outline-none resize-none ${errors.query ? "border-2 border-red-500" : "border-0"
-                      }`}
-                    placeholder={t("Enter your message")}
-                    required
-                  ></textarea>
-                  {errors.query && (
-                    <p className="text-red-500 text-sm mt-1">{errors.query}</p>
-                  )}
-                </div>
+                  <div className="text-center">
+                    <button
+                      type="submit"
+                      className="bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3.5 px-12 rounded-full transition-colors cursor-pointer shadow-md"
+                    >
+                      {t("Send Message")}
+                    </button>
+                  </div>
+                </form>
+              </div>
 
-                <div className="text-center">
-                  <button
-                    type="submit"
-                    className="bg-[#F9C60A] hover:bg-[#3d6b4a] text-white font-medium py-3 px-8 rounded-full transition-colors cursor-pointer"
-                  >
-                    {t("Send Message")}
-                  </button>
-                </div>
-              </form>
             </div>
-
           </div>
         </div>
       </div>

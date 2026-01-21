@@ -71,13 +71,13 @@ function ShopByCategory() {
   }, [router]);
 
   return (
-    <div className="bg-white px-4 my-4 mb-0 md:mb-10">
-      <div className="hidden md:block md:max-w-7xl mx-auto" >
+    <div className="bg-white mb-0 md:mb-10 w-full py-12 md:py-16" style={{ backgroundImage: 'url(/sline.png)', backgroundRepeat: 'repeat', backgroundSize: 'auto' }}>
+      <div className="hidden md:block md:max-w-7xl mx-auto px-4" >
         <h1 className="text-xl md:text-[28px] text-black font-semibold  leading-[36px] tracking-[0]  md:mb-12 mb-4 hidden md:flex">
           {t("Shop By Category")}
         </h1>
 
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7  gap-6 md:gap-8 ">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-10">
           <div
             className="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1"
             onClick={() =>
@@ -135,8 +135,8 @@ function ShopByCategory() {
       </div>
 
       {/* Mobile Category Row */}
-      <div className="md:hidden" style={{ maxWidth: width - 32 }}>
-        <div className=" overflow-x-auto scrollbar-hide px-1 w-full">
+      <div className="md:hidden px-4">
+        <div className=" overflow-x-auto scrollbar-hide w-full">
           <div className="flex gap-6 w-full min-w-0">
 
             {/* New Arrival */}
