@@ -30,21 +30,38 @@ function ProductDetails(props) {
   const router = useRouter();
   const { lang } = useContext(languageContext)
   const [user, setUser] = useContext(userContext);
-  const [productsId, setProductsId] = useState(props?.product);
-  const [selectedColor, setSelectedColor] = useState(props?.product?.varients[0]);
-  const [selectedImageList, setSelectedImageList] = useState(props?.product?.varients[0].image);
+  
+  // Safe initialization with fallbacks
+  const [productsId, setProductsId] = useState(props?.product || null);
+  const [selectedColor, setSelectedColor] = useState(props?.product?.varients?.[0] || {});
+  const [selectedImageList, setSelectedImageList] = useState(props?.product?.varients?.[0]?.image || []);
   const [selectedImage, setSelectedImage] = useState("");
-  const [productReviews, setProductReviews] = useState(props?.product?.reviews);
-  const [productList, SetProductList] = useState(props?.relatedProducts);
+  const [productReviews, setProductReviews] = useState(props?.product?.reviews || []);
+  const [productList, SetProductList] = useState(props?.relatedProducts || []);
   const [cartData, setCartData] = useContext(cartContext);
-  const [priceSlot, setPriceSlote] = useState(props?.product?.price_slot);
+  const [priceSlot, setPriceSlote] = useState(props?.product?.price_slot || []);
   const [priceIndex, setPriceIndex] = useState(0);
-  const [selectedPrice, setSelectedPrice] = useState(props?.product?.price_slot[0]);
+  const [selectedPrice, setSelectedPrice] = useState(props?.product?.price_slot?.[0] || {});
   const [Favorite, setFavorite] = useContext(favoriteProductContext);
   const [isInCart, setIsInCart] = React.useState(false);
   const [availableQty, setAvailableQty] = React.useState(0);
   const [rotation, setRotation] = useState(0);
-  console.log(props)
+
+  // Debug logging to see what's missing (remove in production)
+  if (process.env.NODE_ENV === 'development') {
+    console.log("=== PRODUCT DEBUG ===");
+    console.log("Props received:", !!props);
+    console.log("Product exists:", !!props?.product);
+    console.log("Product ID:", props?.product?._id);
+    console.log("Product name:", props?.product?.name);
+    console.log("Has varients:", !!props?.product?.varients);
+    console.log("Varients length:", props?.product?.varients?.length);
+    console.log("Has price_slot:", !!props?.product?.price_slot);
+    console.log("Price_slot length:", props?.product?.price_slot?.length);
+    console.log("First variant:", props?.product?.varients?.[0]);
+    console.log("First price:", props?.product?.price_slot?.[0]);
+    console.log("=== END DEBUG ===");
+  }
 
   // Stop loader when component mounts (data already loaded via props)
   useEffect(() => {
@@ -53,11 +70,54 @@ function ProductDetails(props) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (router?.query?.id) {
-  //     getProductById();
-  //   }
-  // }, [router?.query?.id]);
+  // Client-side fallback if server-side fetch failed
+  useEffect(() => {
+    if (!productsId && router?.query?.id) {
+      console.log("Server-side fetch failed, trying client-side for:", router.query.id);
+      fetchProductClientSide();
+    }
+  }, [router?.query?.id, productsId]);
+
+  const fetchProductClientSide = async () => {
+    try {
+      if (props.loader) props.loader(true);
+      
+      const res = await Api("get", `getProductByslug/${router.query.id}`, "", router);
+      
+      if (res?.data) {
+        console.log("Client-side fetch successful:", res.data.name);
+        setProductsId(res.data);
+        setSelectedColor(res.data.varients?.[0]);
+        setSelectedImageList(res.data.varients?.[0]?.image);
+        setPriceSlote(res.data.price_slot);
+        setSelectedPrice(res.data.price_slot?.[0]);
+        setProductReviews(res.data.reviews);
+        
+        // Fetch related products
+        try {
+          const relatedRes = await Api("get", `getProductBycategoryId?category=${res.data.category.slug}&product_id=${res.data._id}`, "", router);
+          const sameItem = relatedRes?.data?.filter((f) => f._id !== res.data._id);
+          SetProductList(sameItem || []);
+        } catch (relatedErr) {
+          console.log("Related products fetch failed:", relatedErr);
+        }
+      } else {
+        console.log("Product not found on client-side either");
+        if (props.toaster) {
+          props.toaster({ type: "error", message: "Product not found" });
+        }
+        router.push("/");
+      }
+    } catch (err) {
+      console.error("Client-side fetch failed:", err);
+      if (props.toaster) {
+        props.toaster({ type: "error", message: "Failed to load product" });
+      }
+      router.push("/");
+    } finally {
+      if (props.loader) props.loader(false);
+    }
+  };
 
   const responsive = {
     superLargeDesktop: {
@@ -334,21 +394,39 @@ function ProductDetails(props) {
     }
   }, [Favorite, productsId?._id]);
 
-  const cartItem = productsId._id;
+  const cartItem = cartData?.find(item => item._id === productsId?._id);
   const itemQuantity = cartItem ? cartItem.qty : 0;
 
   return (
     <>
       <Head>
-        <title>{productsId?.metatitle}</title>
-        <meta name="description" content={productsId?.metadescription} />
+        <title>{productsId?.metatitle || "Product Details"}</title>
+        <meta name="description" content={productsId?.metadescription || "Product description"} />
         <link
           rel="canonical"
-          href={`https://www.Oorumittai.com/product-details/${productsId?.slug}`}
+          href={`https://www.Oorumittai.com/product-details/${productsId?.slug || ''}`}
         />
       </Head>
-      <div className="bg-white w-full max-w-7xl mx-auto md:pt-10 pt-14 md:pb-10 pb-5 md:px-0 px-3">
-        <section className="bg-white w-full ">
+      
+      {/* Loading or error check */}
+      {!productsId || !productsId._id || !productsId.varients || !productsId.price_slot ? (
+        <div className="bg-white w-full max-w-7xl mx-auto md:pt-10 pt-14 md:pb-10 pb-5 md:px-0 px-3">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F9C60A] mx-auto mb-4"></div>
+              <p className="text-gray-600">{t("Loading product...")}</p>
+              <div className="text-sm text-gray-500 mt-2">
+                {!productsId && <p>No product data received</p>}
+                {productsId && !productsId._id && <p>Missing product ID</p>}
+                {productsId && !productsId.varients && <p>Missing product variants</p>}
+                {productsId && !productsId.price_slot && <p>Missing price information</p>}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white w-full max-w-7xl mx-auto md:pt-10 pt-14 md:pb-10 pb-5 md:px-0 px-3">
+          <section className="bg-white w-full ">
           <div className="flex flex-wrap items-center text-gray-500 text-xs md:text-sm mt-2 mb-2 gap-1 md:ps-4">
             <p 
               className="font-medium cursor-pointer hover:text-[#F9C60A] transition-colors"
@@ -382,95 +460,103 @@ function ProductDetails(props) {
                   arrows={true}
                   showDots={false}
                 >
-                  {selectedImageList?.map((item, i) => (
-                    <div key={i} className="bg-white w-full md:h-full relative flex justify-center border-0">
-                      <TransformWrapper
-                        initialScale={1}
-                        minScale={1}
-                        maxScale={8}
-                        wheel={{ step: 0.1 }}
-                        doubleClick={{ disabled: true }}
-                      >
-                        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                          <>
-                            <TransformComponent>
-                              <div style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s ease' }}>
-                                <Image
-                                  width={500}
-                                  height={300}
-                                  className="md:h-[500px] w-full object-contain cursor-move"
-                                  src={item}
-                                  alt={productsId?.imageAltName || "Product image"}
-                                />
+                  {selectedImageList && selectedImageList.length > 0 ? (
+                    selectedImageList.map((item, i) => (
+                      <div key={i} className="bg-white w-full md:h-full relative flex justify-center border-0">
+                        <TransformWrapper
+                          initialScale={1}
+                          minScale={1}
+                          maxScale={8}
+                          wheel={{ step: 0.1 }}
+                          doubleClick={{ disabled: true }}
+                        >
+                          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                            <>
+                              <TransformComponent>
+                                <div style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s ease' }}>
+                                  <Image
+                                    width={500}
+                                    height={300}
+                                    className="md:h-[500px] w-full object-contain cursor-move"
+                                    src={item}
+                                    alt={productsId?.imageAltName || "Product image"}
+                                  />
+                                </div>
+                              </TransformComponent>
+                              <div className="absolute bottom-4 right-4 flex gap-2 z-20 bg-white/80 p-2 rounded-full">
+                                <button
+                                  onClick={() => zoomIn()}
+                                  className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                  title="Zoom In"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                  </svg>
+                                </button>
+                                <button
+                                  onClick={() => zoomOut()}
+                                  className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                  title="Zoom Out"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                  </svg>
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setRotation((prev) => prev + 90);
+                                  }}
+                                  className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
+                                  title="Rotate 90°"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                                  </svg>
+                                </button>
                               </div>
-                            </TransformComponent>
-                            <div className="absolute bottom-4 right-4 flex gap-2 z-20 bg-white/80 p-2 rounded-full">
-                              <button
-                                onClick={() => zoomIn()}
-                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
-                                title="Zoom In"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                              </button>
-                              <button
-                                onClick={() => zoomOut()}
-                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
-                                title="Zoom Out"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setRotation((prev) => prev + 90);
-                                }}
-                                className="bg-white p-2 rounded-full shadow-lg text-black hover:bg-gray-100 transition"
-                                title="Rotate 90°"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-                                </svg>
-                              </button>
-                            </div>
-                          </>
-                        )}
-                      </TransformWrapper>
+                            </>
+                          )}
+                        </TransformWrapper>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="bg-white w-full md:h-[500px] h-[300px] relative flex justify-center items-center border-0">
+                      <div className="text-center text-gray-500">
+                        <p>No images available</p>
+                      </div>
                     </div>
-                  ))}
+                  )}
                 </Carousel>
               </div>
               <div className="flex justify-start items-start w-full">
@@ -494,7 +580,7 @@ function ProductDetails(props) {
 
 
                   <div className="pt-7 md:pt-20 w-full md:w-[400px] grid md:grid-cols-3 grid-cols-2 gap-5">
-                    {priceSlot &&
+                    {priceSlot && priceSlot.length > 0 ?
                       priceSlot.map((data, i) => {
                         const otherprice = parseFloat(data?.other_price);
                         const ourPrice = parseFloat(data?.our_price);
@@ -548,7 +634,11 @@ function ProductDetails(props) {
                             </div>
                           </div>
                         );
-                      })}
+                      }) : (
+                        <div className="col-span-full text-center text-gray-500">
+                          <p>No pricing information available</p>
+                        </div>
+                      )}
                   </div>
 
 
@@ -573,7 +663,7 @@ function ProductDetails(props) {
                       </div>
                     </>
                   ) : (
-                    productsId.Quantity <= 0 ? (
+                    productsId?.Quantity <= 0 ? (
                       <button
                         className="bg-[#F9C60A]/80 px-4 py-2 rounded-[8px] text-gray-200 font-semibold text-md md:mt-5 mt-4 cursor-not-allowed "
                       >
@@ -589,7 +679,7 @@ function ProductDetails(props) {
                     )
 
                   )}
-                  {productsId.isShipmentAvailable ? (
+                  {productsId?.isShipmentAvailable ? (
                     <p className="text-black font-normal text-[17px] md:mt-5 mt-2">
                       {t("Shipment Delivery is available")}
                     </p>
@@ -664,7 +754,7 @@ function ProductDetails(props) {
               )}
             </div>
           </div>
-          <ProductReviews productReviews={productReviews} slug={productsId.slug} />
+          <ProductReviews productReviews={productReviews} slug={productsId?.slug} />
 
           <div className="bg-white max-w-7xl mx-auto">
             <p className="text-black text-xl font-bold md:mb-10 mb-5 md:mt-4 mt-4 ">
@@ -686,6 +776,7 @@ function ProductDetails(props) {
           </div>
         </section>
       </div>
+      )}
     </>
 
   );
@@ -697,33 +788,84 @@ export default ProductDetails;
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-
-  const baseUrl = ConstantsUrl; // example: https://api.Oorumittai.com
+  
+  console.log("=== SERVER SIDE DEBUG ===");
+  console.log("Requested product slug:", id);
 
   try {
-    // const productRes = await fetch(`${baseUrl}getProductByslug/${id}`);
-
     const productRes = await Api("get", `getProductByslug/${id}`, "", '');
-    const product = productRes.data;
+    console.log("API Response status:", productRes?.status);
+    console.log("API Response data exists:", !!productRes?.data);
+    
+    const product = productRes?.data;
 
-    const relatedRes = await fetch(
-      `${baseUrl}getProductBycategoryId?category=${product.category.slug}&product_id=${product._id}`
-    );
-    const relatedProducts = await relatedRes.json();
-    const sameItem = relatedProducts?.data?.filter((f) => f._id !== product._id);
+    if (!product || !product._id) {
+      console.log("❌ PRODUCT NOT FOUND:", id);
+      console.log("This slug doesn't exist in database");
+      return {
+        notFound: true,
+      };
+    }
 
+    // Validate required fields and add defaults if missing
+    if (!product.varients || !Array.isArray(product.varients) || product.varients.length === 0) {
+      console.log("⚠️ Adding default varients for product:", product.name);
+      product.varients = [{
+        color: '',
+        image: ['/placeholder-image.jpg'],
+        BarCode: '',
+        selected: []
+      }];
+    }
+
+    if (!product.price_slot || !Array.isArray(product.price_slot) || product.price_slot.length === 0) {
+      console.log("⚠️ Adding default price_slot for product:", product.name);
+      product.price_slot = [{
+        value: 1,
+        price: 0,
+        unit: 'piece',
+        our_price: 0,
+        other_price: 0
+      }];
+    }
+
+    // Ensure each variant has images
+    product.varients = product.varients.map(variant => ({
+      ...variant,
+      image: variant.image && variant.image.length > 0 ? variant.image : ['/placeholder-image.jpg']
+    }));
+
+    console.log("✅ Product processed successfully:", product.name);
+
+    let relatedProducts = [];
+    try {
+      if (product.category?.slug) {
+        const relatedRes = await fetch(
+          `${ConstantsUrl}getProductBycategoryId?category=${product.category.slug}&product_id=${product._id}`
+        );
+        const relatedData = await relatedRes.json();
+        relatedProducts = relatedData?.data?.filter((f) => f._id !== product._id) || [];
+        console.log("Related products found:", relatedProducts.length);
+      }
+    } catch (relatedErr) {
+      console.log("Related products fetch failed:", relatedErr?.message);
+    }
+
+    console.log("=== SERVER SIDE SUCCESS ===");
+    
     return {
       props: {
         product,
-        relatedProducts: sameItem,
+        relatedProducts,
       },
     };
   } catch (err) {
+    console.log("=== SERVER SIDE ERROR ===");
+    console.log("Error:", err?.message);
+    console.log("Likely cause: Product slug '" + id + "' not found in database");
+    
     return {
-      props: {
-        product: null,
-        relatedProducts: [],
-      },
+      notFound: true,
     };
   }
 }

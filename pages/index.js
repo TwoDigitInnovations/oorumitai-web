@@ -275,16 +275,21 @@ function BestSeller(props) {
 
       <div className="grid md:grid-cols-4 lg:grid-cols-4 grid-cols-2 gap-4 mx-auto w-full">
         {productList.length > 0 ? (
-          productList.map((item, i) => (
-            <GroceryCatories
-              loader={props.loader}
-              toaster={props.toaster}
-              key={i}
-              item={item}
-              i={i}
-              url={`/product-details/${item?.slug}`}
-            />
-          ))
+          productList.map((item, i) => {
+            // Clean the slug by removing whitespace and newlines
+            const cleanSlug = item?.slug?.trim().replace(/\s+/g, '-').replace(/\n/g, '');
+            
+            return (
+              <GroceryCatories
+                loader={props.loader}
+                toaster={props.toaster}
+                key={i}
+                item={item}
+                i={i}
+                url={`/product-details/${cleanSlug}`}
+              />
+            );
+          })
         ) : (
           <div className="col-span-6 flex justify-center text-[16px] text-gray-500 min-h-[200px]">
             {t("No products available")}.
