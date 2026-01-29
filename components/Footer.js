@@ -66,19 +66,19 @@ const Footer = () => {
                 <li className="flex items-center mb-2 transition-transform duration-300 hover:-translate-y-[8px]">
                   <Phone className="text-2xl mr-2" aria-hidden="true" />
                   <a
-                    href="tel:832-230-9288"
+                    href="tel:+91-6382030330"
                     className="text-[16px] md:text-[19px]"
                   >
-                    832-230-9288
+                    +91-6382030330
                   </a>
                 </li>
                 <li className="flex items-center transition-transform duration-300 hover:-translate-y-[8px]">
                   <Mail className="text-2xl mr-2" aria-hidden="true" />
                   <a
-                    href="mailto:contact@Oorumittai.com"
+                    href="mailto:oorumittai@gmail.com"
                     className="text-[16px] md:text-[19px]"
                   >
-                    contact@Oorumittai.com
+                   oorumittai@gmail.com
                   </a>
                 </li>
               </ul>

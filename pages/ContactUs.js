@@ -169,17 +169,17 @@ const FeedbackForm = (props) => {
                     href="mailto:contact@Oorumittai.com"
                     className="text-black text-lg font-poppins hover:text-blue-600 transition"
                   >
-                    contact@Oorumittai.com
+                    oorumittai@gmail.com
                   </a>
                 </div>
 
                 <div>
                   <p className="text-gray-700 font-medium mb-1">{t("Phone No")}:</p>
                   <a
-                    href="tel:1234567890"
+                    href="tel:+91-6382030330"
                     className="text-black text-lg hover:text-blue-600 transition"
                   >
-                    1234567890
+                   +91-6382030330
                   </a>
                 </div>
               </div>
