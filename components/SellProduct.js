@@ -233,11 +233,11 @@ const SellProduct = ({ loader, toaster }) => {
                   {/* Price Section */}
                   <div className="flex items-center md:justify-center justify-start md:gap-3 gap-1 mb-3">
                     <span className="text-red-500 font-semibold text-[17px] md:text-xl">
-                      ${item.price}
+                      INR {item.price}
                     </span>
                     {item?.price_slot?.our_price && (
                       <span className="text-gray-500 text-sm line-through">
-                        ${item.price_slot?.our_price}
+                        INR {item.price_slot?.our_price}
                       </span>
                     )}
                     {item.product?.price_slot?.[0]?.our_price && (
