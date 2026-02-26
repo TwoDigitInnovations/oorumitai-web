@@ -659,9 +659,11 @@ function Cart(props) {
         console.log(data)
         setOrderID(data.orderId);
         
-      
-        createPhonePePayment(data.orderId);
+        // PhonePe payment gateway commented out - Direct order placement
+        // createPhonePePayment(data.orderId);
         
+        // Direct order placement without payment gateway
+        await directOrderPlacement(data.orderId);
        
         // if (paymentMethod === "phonepe") {
         //   createPhonePePayment(data.orderId);
@@ -776,6 +778,8 @@ function Cart(props) {
   */
  
 
+  // PhonePe Payment Gateway - COMMENTED OUT
+  /*
   const createPhonePePayment = async (ID) => {
     try {
       props.loader(true);
@@ -820,6 +824,44 @@ function Cart(props) {
       props.toaster({
         type: "error",
         message: error?.response?.data?.message || error?.message || "Something went wrong with PhonePe payment",
+      });
+    }
+  };
+  */
+
+  // Direct Order Placement without Payment Gateway
+  const directOrderPlacement = async (ID) => {
+    try {
+      props.loader(true);
+      
+      // Mark order as succeeded without payment
+      const res = await Api("post", "direct-order-placement", { orderID: ID }, router);
+      
+      props.loader(false);
+
+      if (res && res.status) {
+        // Clear cart and show success
+        localStorage.removeItem("addCartDetail");
+        localStorage.removeItem("checkoutData");
+        setCartData([]);
+        setSuccessPopup(true);
+        
+        props.toaster({
+          type: "success",
+          message: "Order placed successfully!",
+        });
+      } else {
+        props.toaster({
+          type: "error",
+          message: res?.message || "Failed to place order",
+        });
+      }
+    } catch (error) {
+      console.error("Direct Order Placement Error:", error);
+      props.loader(false);
+      props.toaster({
+        type: "error",
+        message: error?.message || "Something went wrong while placing order",
       });
     }
   };
@@ -898,7 +940,8 @@ function Cart(props) {
   */
   
 
-  // PhonePe Callback Handler
+  // PhonePe Callback Handler - COMMENTED OUT
+  /*
   useEffect(() => {
     if (!router.isReady) return;
     if (paymentChecked) return;
@@ -984,6 +1027,7 @@ function Cart(props) {
     router.query.merchantTransactionId,
     paymentChecked,
   ]);
+  */
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-2 md:mt-5 mt-8 md:mb-0 mb-10">
