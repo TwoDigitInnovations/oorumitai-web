@@ -1093,7 +1093,15 @@ function Cart(props) {
                         subtitle: t("Delivery in 3 to 5 business days"),
                         type: "delivery",
                       },
-                    ].map((opt) => {
+                    ]
+                    .filter((opt) => {
+                      // Show ShipmentDelivery only for logged-in users
+                      if (opt.id === "ShipmentDelivery" && !isLoggedIn) {
+                        return false;
+                      }
+                      return true;
+                    })
+                    .map((opt) => {
                       const selected = pickupOption === opt.id;
 
                       return (
@@ -1467,7 +1475,8 @@ function Cart(props) {
                     </div>
                     */}
 
-                    {/* PhonePe Payment Info */}
+                    {/* PhonePe Payment Info - COMMENTED OUT */}
+                    {/*
                     <div className="mt-4 pt-4 border-t border-gray-100">
                       <div className="flex items-center justify-between p-3 bg-purple-50 border-2 border-purple-200 rounded-lg">
                         <div>
@@ -1481,6 +1490,7 @@ function Cart(props) {
                         <div className="text-2xl">💳</div>
                       </div>
                     </div>
+                    */}
 
                     <div className="mt-4">
                       {isLoggedIn ? (
